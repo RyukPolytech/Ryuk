@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  apache:
+    build:
+      context: images
+      dockerfile: Php_Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - ..:/var/www/html
+
+  local_db:
+    build:
+      context: images
+      dockerfile: MySQL_Dockerfile
+    ports:
+      - "3306:3306"
+    volumes:
+      - ryuk_sqldata:/var/lib/mysql
+
+volumes:
+  ryuk_sqldata:
