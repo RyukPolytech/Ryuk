@@ -15,7 +15,7 @@ services:
       context: images
       dockerfile: MySQL_Dockerfile
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - ryuk_sqldata:/var/lib/mysql
 

@@ -1,0 +1,5 @@
+vendor/
+*.lock
+*.local
+bin/
+var/
