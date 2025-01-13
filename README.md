@@ -58,3 +58,9 @@ Framework php : Symfony.
 - [Causes de décès (data.gouv.fr)](https://www.data.gouv.fr/fr/datasets/causes-de-deces/)
 - [Nombre de décès quotidiens par département](https://www.data.gouv.fr/fr/datasets/nombre-de-deces-quotidiens-par-departement/)
 - [Causes de décès par sexe et âge de 1925 à 1999 (data.gouv.fr)](https://www.data.gouv.fr/fr/datasets/causes-de-deces-par-sexe-et-age-de-1925-a-1999/)
+
+# Démarrer le serveur
+
+```bash
+symfony server:start
+```
