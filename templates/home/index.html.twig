@@ -2,30 +2,13 @@
 
 {% block title %}Ryuk - Home{% endblock %}
 
-{% block body %}
-<h1>Ryuk</h1>
-<p>a</p> <br/>
-<p>a</p> <br/>
-<p>a</p> <br/>
-<p>a</p> <br/>
-<p>a</p> <br/>
-<p>a</p> <br/>
-<p>a</p> <br/>
-<p>a</p> <br/>
-<p>a</p> <br/>
-<p>a</p> <br/>
-<p>a</p> <br/>
-<p>a</p> <br/>
-<p>a</p> <br/>
-<p>a</p> <br/>
-<p>a</p> <br/>
-<p>a</p> <br/>
-<p>a</p> <br/>
-<p>a</p> <br/>
-<p>a</p> <br/>
-<p>a</p> <br/>
-<p>a</p> <br/>
-<p>a</p> <br/>
-<p>a</p> <br/>
-<p>a</p> <br/>
+{% block content %}
+<h2>Une mort est si vite arrivée...</h2>
+<p>Beaucoup de contenu.</p> <br>
+<p>Beaucoup de contenu.</p> <br>
+<p>Beaucoup de contenu.</p> <br>
+{% for i in 1..100 %}
+    <p>Beaucoup de contenu.</p>
+{% endfor %}
+
 {% endblock %}
