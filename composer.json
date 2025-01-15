@@ -24,7 +24,9 @@
         "twig/twig": "^2.12|^3.18"
     },
     "require-dev": {
-        "symfony/maker-bundle": "^1.61"
+        "roave/security-advisories": "dev-latest"
+        ,
+        "symfony/maker-bundle": "^1.62"
     },
     "config": {
         "allow-plugins": {
