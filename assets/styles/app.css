@@ -54,12 +54,16 @@ footer, header {
 
 footer {
     display: grid;
-    grid-template: auto / 1fr 8fr 1fr;
+    grid-template: auto / 1fr 1fr 1fr;
     text-align: center;
     align-items: center;
     padding: 0.4em;
     margin-top: 2em;
     font-size: 12px;
+}
+
+footer > a {
+    color: white;
 }
 
 a {
@@ -68,4 +72,9 @@ a {
 
 a:hover {
     color: rgb(159, 159, 159);
+}
+
+img.accueil {
+    background-color: white;
+    border-radius: 25px;
 }

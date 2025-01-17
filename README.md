@@ -1,10 +1,6 @@
 # Projet Ryuk
 ## Une mort est si vite arrivée
 
-<style>
-r { color: #F94449 }
-</style>
-
 > **Equipe :**   
 > Melvyn BAUVENT,  
 > Julien CHATAIGNER,  
@@ -40,7 +36,7 @@ Framework php : Symfony.
 ### Racine
 
 - Dossier [config](config) contenant la configuration du projet
-- Dossier [migrations](migrations)  contenant les dossiers concernant la base de données, dont les fichiers sont utilisés par l'[ORM Doctrine](https://www.doctrine-project.org/). <r>*Ne pas modifier !*<r>
+- Dossier [migrations](migrations)  contenant les dossiers concernant la base de données, dont les fichiers sont utilisés par l'[ORM Doctrine](https://www.doctrine-project.org/). *Ne pas modifier !*
 - Dossier [public](public) contenant le fichier [index.php](public\index.php)
 - Dossier [src](src) contenant le code en lui-même
 - Dossier [vendor](vendor)
@@ -63,4 +59,10 @@ Framework php : Symfony.
 
 ```bash
 symfony server:start
+```
+
+# Mettre à jour la base de données
+
+```bash
+php bin/console doctrine:migrations:migrate
 ```
