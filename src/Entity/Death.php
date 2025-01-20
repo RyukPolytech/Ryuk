@@ -22,17 +22,20 @@ class Death
     #[ORM\Column]
     private ?int $birthyear = null;
 
-    #[ORM\Column]
-    private ?int $birthcountry = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?int $deathcountry = null;
-
     #[ORM\Column(nullable: true)]
     private ?int $age = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $deathcause = null;
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Country $birthcountry = null;
+
+    #[ORM\ManyToOne(inversedBy: 'deaths')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Country $deathcountry = null;
+
+    #[ORM\ManyToOne(inversedBy: 'deaths')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?DeathCause $deathcause = null;
 
     public function getId(): ?int
     {
@@ -75,30 +78,6 @@ class Death
         return $this;
     }
 
-    public function getBirthcountry(): ?int
-    {
-        return $this->birthcountry;
-    }
-
-    public function setBirthcountry(int $birthcountry): static
-    {
-        $this->birthcountry = $birthcountry;
-
-        return $this;
-    }
-
-    public function getDeathcountry(): ?int
-    {
-        return $this->deathcountry;
-    }
-
-    public function setDeathcountry(?int $deathcountry): static
-    {
-        $this->deathcountry = $deathcountry;
-
-        return $this;
-    }
-
     public function getAge(): ?int
     {
         return $this->age;
@@ -111,12 +90,36 @@ class Death
         return $this;
     }
 
-    public function getDeathcause(): ?int
+    public function getBirthcountry(): ?Country
+    {
+        return $this->birthcountry;
+    }
+
+    public function setBirthcountry(?Country $birthcountry): static
+    {
+        $this->birthcountry = $birthcountry;
+
+        return $this;
+    }
+
+    public function getDeathcountry(): ?Country
+    {
+        return $this->deathcountry;
+    }
+
+    public function setDeathcountry(?Country $deathcountry): static
+    {
+        $this->deathcountry = $deathcountry;
+
+        return $this;
+    }
+
+    public function getDeathcause(): ?DeathCause
     {
         return $this->deathcause;
     }
 
-    public function setDeathcause(?int $deathcause): static
+    public function setDeathcause(?DeathCause $deathcause): static
     {
         $this->deathcause = $deathcause;
 
