@@ -45,6 +45,15 @@ article {
     color: white;
 }
 
+article > .card {
+    margin: 10px;
+    padding: 10px;
+    width: 31%;
+    background-color: white;
+    color: rgb(57, 57, 57);
+    border-radius: 25px;
+}
+
 footer, header {
     background-color: rgb(17, 17, 17);
     color: white;
