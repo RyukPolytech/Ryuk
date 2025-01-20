@@ -20,19 +20,19 @@ h2{
 .nav {
     display:table;
     width: 100%;
-  }
+}
 
-.nav > a{
+.nav > a {
     width: 15%;
     display:table-cell;
     text-align:center;
     color: white;
     border-radius: 25px;
-  }
+}
 
 .nav > a:hover {
     background-color: rgb(57, 57, 57);
-  }
+}
 
 .content {
     padding: 10px;
@@ -42,21 +42,8 @@ article {
     margin: 10px;
     padding: 10px;
     background-color: rgb(57, 57, 57);
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
     color: white;
 }
-
-article > .card {
-    margin: 10px;
-    padding: 10px;
-    width: 31%;
-    background-color: white;
-    color: rgb(57, 57, 57);
-    border-radius: 25px;
-}
-
 
 footer, header {
     background-color: rgb(17, 17, 17);
@@ -79,9 +66,8 @@ footer > a {
     color: white;
 }
 
-
 a {
-    color: rgb(57, 57, 57);
+    color: rgb(255, 255, 255);
 }
 
 a:hover {
