@@ -1,50 +1,96 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ryuk - Testament{% endblock %}
+
+{% block title %}Ryuk - Testament
+{% endblock %}
 
 {% block content %}
-<h2>Mieux vaut prévenir que mourir.</h2>
-<article> 
-« CECI EST MON TESTAMENT
-JE SOUSSIGNE(E)
-Monsieur état-civil complet, date de naissance, adresse, célibataire, pacsé avec
-Mademoiselle xxxxxxxx.
-OU
-Mademoiselle état-civil complet, date de naissance, adresse, célibataire, pacsée avec
-Monsieur XXXXXX
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<h2>Mieux vaut prévenir que mourir.</h2>
+	<article class="lh-base">
 
-<br>
+		<form>
+			CECI EST MON TESTAMENT,
+			<br>
+			JE SOUSSIGNE(E)
+			<br>
+			<select id="genre" name="genre" class="text-black" required>
+				<option value="" selected>Genre</option>
+				<option value="m">M.</option>
+				<option value="f">Mme.</option>
+				<option value="x">Mx.</option>
+			</select>
+			<input type="text" id="name" class="text-black" name="name" value="Etat-civil complet (noms, prénoms)" required>,
+															
+																		né.e
+			<input type="date" id="date_naissance" name="date_naissance" value="date de naissance" required>, 
+															
+																		résidant au
+			<input type="text" id="numero" class="text-black" name="numero" value="numéro de la rue" required>
+			<input type="text" id="rue" class="text-black" name="rue" value="rue" required>,
+			<input type="text" class="text-black" id="code_postal" name="code_postal" value="code postal" required>
+			<input type="text" id="ville" class="text-black" name="ville" value="ville" required>
+			<input type="text" id="pays" class="text-black" name="pays" value="pays" required>,
 
-Déclare établir mes dispositions de dernières volontés dans les termes suivants :
-« 1) Pour le cas où je ne laisserais pas de descendants :
-Je lègue au profit de mon partenaire pacsé, Monsieur xxx OU Madame xxx la toute propriété de tous mes biens sans exception ni réserve.
-<br>
-2) En présence d’enfants ou de descendants :
-Je lègue au profit de mon partenaire pacsé, Monsieur xxx ou Madame XXX 
-SOIT l'usufruit de la totalité de mes biens et droits mobiliers et immobiliers qui composeront ma succession (à l’exception …..).
-SOIT l’usufruit de tous mes biens immobiliers OU l’usufruit de la résidence principale.
-<br>
-En présence d’enfants ou de descendants, l’usufruitier ne sera pas tenu de fournir caution mais sera tenu, si les descendants l’exigent, de faire effectuer inventaire des biens
-soumis à son usufruit.
-Pour le cas où la valeur de ce legs excèderait la quotité disponible de ma succession et si la réduction en était demandée, le legs ne sera pas caduc, le bénéficiaire pourra le conserver en nature à charge de désintéresser les héritiers réservataires en valeur.
+			<button type="button" data-toggle="collapse" data-target="#collapse" class="text-black">célibataire/pacsé.e</button>
 
-La présente disposition serait caduque en cas de dissolution de PACS (ou de séparation
-de fait), ou encore dans le cas où nous viendrions à décéder dans un même évènement. »
+			<div id="collapse" class="collapse">
+				pacsé.e avec
+				<select id="genre_partenaire" name="genre_partenaire" class="text-black" required>
+					<option value="" selected>Genre</option>
+					<option value="m">M.</option>
+					<option value="f">Mme.</option>
+					<option value="x">Mx.</option>
+				</select>
+				<input type="text" id="name_partenaire" class="text-black" name="name_partenaire" required>, 
+																							né.e
+				<input type="date" id="date_naissance_partenaire" class="text-black" name="date_naissance_partenaire" required>
+			</div>
 
-<br>
-Tutelle testamentaire
-En cas de décès simultanés et avant la majorité ou l’émancipation de mes enfants, je
-désigne pour exercer les fonctions de tuteur et de garde de mes enfants mineurs, Monsieur xxx
-ou Madame xxxx, ainsi que la faculté m’en est donnée par les dispositions du Code civil.
-Pour le cas où ce dernier viendrait à décéder avant moi ou à ne pouvoir pourvoir aux
-fonctions de tuteur, je désigne comme tuteur de second rang Monsieur XXX ou Madame XXX
-Je souhaite que le présent testament soit mentionné au Fichier central des dispositions
-de dernières volontés par les soins de Maître…………., notaire à ………….
-Fait et écrit en entier de ma main, librement, avec la pleine jouissance de mes facultés
-intellectuelles.
-Je déclare, en outre, révoquer toutes dispositions testamentaires antérieures.
-Fait et passé à
-Le
-Signature »
-</article>
+			<br>
+
+			Déclare établir mes dispositions de dernières volontés dans les termes suivants :
+			<br>
+			« 1) Pour le cas où je ne laisserais pas de descendants : Je lègue au profit de mon partenaire pacsé la toute propriété de tous mes biens sans exception ni réserve.
+			<br>
+			2) En présence d’enfants ou de descendants : Je lègue au profit de mon partenaire pacsé, Monsieur xxx ou Madame XXX
+			<br>
+			SOIT l'usufruit de la totalité de mes biens et droits mobiliers et immobiliers qui composeront ma succession (à l’exception …..).
+			<br>
+			SOIT l’usufruit de tous mes biens immobiliers OU l’usufruit de la résidence principale.
+			<br>
+			En présence d’enfants ou de descendants, l’usufruitier ne sera pas tenu de fournir caution mais sera tenu, si les descendants l’exigent, de faire effectuer inventaire des biens soumis à son usufruit. Pour le cas où la valeur de ce legs excèderait la quotité disponible de ma succession et si la réduction en était demandée, le legs ne sera pas caduc, le bénéficiaire pourra le conserver en nature à charge de désintéresser les héritiers réservataires en valeur.
+			<br>
+			La présente disposition serait caduque en cas de dissolution de PACS (ou de séparation de fait), ou encore dans le cas où nous viendrions à décéder dans un même évènement. »
+
+			<br><br>
+			<span class="fw-bold">
+				Tutelle testamentaire
+			</span>
+			<br>
+			En cas de décès simultanés et avant la majorité ou l’émancipation de mes enfants, je désigne pour exercer les fonctions de tuteur et de garde de mes enfants mineurs, Monsieur xxx ou Madame xxxx, ainsi que la faculté m’en est donnée par les dispositions du Code civil.
+
+			<br>Pour le cas où ce dernier viendrait à décéder avant moi ou à ne pouvoir pourvoir aux fonctions de tuteur, je désigne comme tuteur de second rang Monsieur XXX ou Madame XXX
+			<br><br>
+			Je souhaite que le présent testament soit mentionné au Fichier central des dispositions de dernières volontés par les soins de Maître…………, notaire à ………….
+			<br>
+			Fait et écrit en entier de ma main, librement, avec la pleine jouissance de mes facultés intellectuelles.
+			<br>
+			Je déclare, en outre, révoquer toutes dispositions testamentaires antérieures.
+			<br>
+			Fait et passé à
+			<br>
+			Le
+			<br>
+
+			Signature
+
+
+			<br>
+			<br>
+			<button type="submit">Valider</button>
+		</form>
+	</article>
 {% endblock %}

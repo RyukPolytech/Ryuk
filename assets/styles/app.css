@@ -88,3 +88,7 @@ img.accueil {
     background-color: white;
     border-radius: 25px;
 }
+
+form > input {
+    color:rgb(17, 17, 17);
+}
