@@ -1,5 +1,5 @@
 {% block footer %}
-	<a href="">Informations légales</a>
-    <a href="">Ressources utilisées</a>
-    <a href="">Contacter les propriétaires du site</a>
+	<a href={{ path('app_footer_informations_legales') }}>Informations légales</a>
+    <a href={{ path('app_footer_ressources') }}>Ressources utilisées</a>
+    <a href={{ path('app_footer_contact') }}>Contacter les propriétaires du site</a>
 {% endblock %}
