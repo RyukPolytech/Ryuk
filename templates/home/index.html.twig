@@ -6,6 +6,23 @@
 {% block content %}
 	<h2>Une mort est si vite arrivée...</h2>
 	<article>
+		<div class="card">
+			<h2>Nombre de morts par départements</h2>
+			<table>
+				<thead>
+					<td>Departement</td>
+					<td>Nombre</td>
+				</thead>
+				<tbody>
+					{% for departement in departements %}
+					<tr>
+						<td>{{ departement.nom }}</td>
+						<td>{{ departement.nombre }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 		{% for i in 1..100 %}
 			<div class="card">
 				Beaucoup de contenu.
