@@ -22,3 +22,4 @@ var/
 ###< symfony/asset-mapper ###
 
 *.cache
+*.bash
