@@ -35,21 +35,14 @@
 
 	<script>
 		const defaultLocation = [37.764848, 125.625902];
+		
 		const mapObject = L.map('map');
 		const map = mapObject.setView(defaultLocation, 20);
+		map.locate({setView: true, maxZoom: 16});
 		let tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				maxZoom: 19,
 				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 		}).addTo(map);
-
-		// quand on a accès à la position
-		navigator.geolocation.getCurrentPosition(function (location) {
-			map.setView([location.coords.latitude, location.coords.longitude], 15);
-			tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-				maxZoom: 19,
-				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-			});
-		});
 	</script>
 
 </article>
