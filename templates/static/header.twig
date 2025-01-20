@@ -1,11 +1,11 @@
 {% block header %}
 
-	<a href="">
+	<a href={{ path('app_home') }}>
 		<img class="accueil" src="{{ asset('images/icon.svg') }}" width="30%" alt="Accueil">
 	</a>
-	<a href="">Prédictions</a>
-	<a href="">Assurance Vie</a>
-	<a href="">Testament</a>
-	<a href="">Carte</a>
-	<a href="">Ressources</a>
+	<a href={{ path('app_predictions') }}>Prédictions</a>
+	<a href={{ path('app_assurance') }}>Assurance Vie</a>
+	<a href={{ path('app_testament') }}>Testament</a>
+	<a href={{ path('app_carte') }}>Carte</a>
+	<a href={{ path('app_ressources') }}>Ressources</a>
 {% endblock %}
