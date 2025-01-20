@@ -3,6 +3,7 @@ body {
     margin: 0px;
     min-height: 100vh;
     padding: 0px;
+    text-align: justify;
     display: flex;
     flex-direction: column;
     font-family: 'OctoSquares', Arial, Helvetica, sans-serif;
