@@ -42,8 +42,21 @@ article {
     margin: 10px;
     padding: 10px;
     background-color: rgb(57, 57, 57);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     color: white;
 }
+
+article > .card {
+    margin: 10px;
+    padding: 10px;
+    width: 31%;
+    background-color: white;
+    color: rgb(57, 57, 57);
+    border-radius: 25px;
+}
+
 
 footer, header {
     background-color: rgb(17, 17, 17);
@@ -65,6 +78,7 @@ footer {
 footer > a {
     color: white;
 }
+
 
 a {
     color: rgb(57, 57, 57);
