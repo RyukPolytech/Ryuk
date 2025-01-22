@@ -36,6 +36,18 @@ class DeathCause
     #[ORM\OneToMany(targetEntity: Death::class, mappedBy: 'deathcause')]
     private Collection $deaths;
 
+    #[ORM\Column]
+    private ?int $span_0_to_64 = null;
+
+    #[ORM\Column]
+    private ?int $span_65_to_85 = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $span_85_plus = null;
+
+    #[ORM\Column]
+    private ?int $totalDeath = null;
+
     public function __construct()
     {
         $this->deaths = new ArrayCollection();
@@ -132,6 +144,54 @@ class DeathCause
                 $death->setDeathcause(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSpan0To64(): ?int
+    {
+        return $this->span_0_to_64;
+    }
+
+    public function setSpan0To64(int $span_0_to_64): static
+    {
+        $this->span_0_to_64 = $span_0_to_64;
+
+        return $this;
+    }
+
+    public function getSpan65To85(): ?int
+    {
+        return $this->span_65_to_85;
+    }
+
+    public function setSpan65To85(?int $span_65_to_85): static
+    {
+        $this->span_65_to_85 = $span_65_to_85;
+
+        return $this;
+    }
+
+    public function getSpan85Plus(): ?int
+    {
+        return $this->span_85_plus;
+    }
+
+    public function setSpan85Plus(?int $span_85_plus): static
+    {
+        $this->span_85_plus = $span_85_plus;
+
+        return $this;
+    }
+
+    public function getTotalDeath(): ?int
+    {
+        return $this->totalDeath;
+    }
+
+    public function setTotalDeath(int $totalDeath): static
+    {
+        $this->totalDeath = $totalDeath;
 
         return $this;
     }
