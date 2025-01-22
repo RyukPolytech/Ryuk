@@ -12,9 +12,11 @@ class HomeController extends AbstractController
     public function index(): Response
     {
         $a = array(array("nom" => "rhone", "nombre" => 69), array("nom" => "loire", "nombre" => 42)); // pour l'exemple, il faudra interroger la base
+        $b = array(array("prenom" => "julien", "nombre" => 120), array("prenom" => "lilas", "nombre" => 240), array("prenom" => "merlvyn", "nombre" => 60)); // pour l'exemple, il faudra interroger la base
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
-            'departements' => $a,
+            'topDepartements' => $a,
+            'topPrenoms' => $b,
         ]);
     }
 }
