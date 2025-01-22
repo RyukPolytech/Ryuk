@@ -95,3 +95,7 @@ table {
     border-style: solid !important;
     margin: 0px !important;
 }
+
+form > input {
+    color:rgb(17, 17, 17);
+}
