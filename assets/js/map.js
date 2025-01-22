@@ -3,8 +3,11 @@ const defaultLocation = [37.764848, 125.625902];
 const map = L.map('map');
 
 map.locate({ setView: true, maxZoom: 20 });
+L.control.scale().addTo(map);
 
 const poiNodes = new Map();
+
+let layers = [];
 
 function setView(location, zoom) {
 	const mapView = map.setView(location, zoom);
@@ -19,6 +22,7 @@ function addPoint(node, icon, title) {
 	const marker = L.marker([lat, lon], { icon: icon }).addTo(map);
 	if (title)
 		marker.bindPopup(title);
+	layers.push(marker);
 }
 
 function getMiddlePoint(coordsList) {
@@ -27,7 +31,7 @@ function getMiddlePoint(coordsList) {
 	coordsList.forEach(coord => {
 		final[0] += coord[0];
 		final[1] += coord[1];
-		size ++;
+		size++;
 	});
 	final[0] /= size;
 	final[1] /= size;
@@ -40,9 +44,20 @@ function addPolygon(node, polyIcon, color, title) {
 		const coords = poiNodes.get(nodeID);
 		coordsList.push(coords);
 	});
-	L.polygon(coordsList, {color: color}).addTo(map);
+	const polygon = L.polygon(coordsList, { color: color }).addTo(map);
 	const middle = getMiddlePoint(coordsList);
-	L.marker(middle, { icon: polyIcon }).addTo(map).bindPopup(title);
+	const marker = L.marker(middle, { icon: polyIcon }).addTo(map);
+	if (title)
+		marker.bindPopup(title);
+	layers.push(marker);
+	layers.push(polygon);
+}
+
+function clearMakers() {
+	layers.forEach(layer => {
+		map.removeLayer(layer);
+	});
+	layers = [];
 }
 
 function processPOI(poi) {
@@ -62,8 +77,13 @@ function processArea(poi) {
 			addPolygon(poi, hosIcon, "red", tags.name);
 		}
 		if (tags.landuse == "cemetery") {
-			addPolygon(poi, cimIcon, "black", tags.name);
-			console.log(tags.name);
+			let popupText = "";
+			if (tags.name) {
+				popupText = tags.name;
+				if (tags["cemetery:capacity"])
+					popupText += "<br>Capacité : " + tags["cemetery:capacity"];
+			}
+			addPolygon(poi, cimIcon, "black", popupText);
 		}
 	}
 }
@@ -77,25 +97,30 @@ function processPOIs(pois) {
 	});
 }
 
+function processResponse(response) {
+	const elements = response.elements;
+	clearMakers();
+	processPOIs(elements);
+}
+
 function updatePois() {
 	const center = map.getCenter();
-	const search_radius = 2000;
-	const httpResponse = JSON.parse(httpGet(getDefibrilatorAroundRequest(center.lat, center.lng, search_radius)));
-	const elements = httpResponse.elements;
-	processPOIs(elements);
+	const search_radius = 6378137 / (2 ** (map.getZoom() - 5));
+	httpGet(getDefibrilatorAroundRequest(center.lat, center.lng, search_radius));
 }
 
 map.addEventListener("locationerror", function (event) {
 	setView(defaultLocation, 19);
 	document.getElementById("locate_status").innerText = "La localisation a été refusée !";
-	document.getElementById("update-btn").disabled = false;
 });
 
 map.addEventListener("locationfound", function (event) {
 	setView(event.latlng, 16);
 	document.getElementById("locate_status").innerText = "La localisation a été acceptée !";
+});
+
+map.addEventListener("moveend", function (event) {
 	updatePois();
-	document.getElementById("update-btn").disabled = false;
 });
 
 function getBaseURL() {
@@ -103,10 +128,7 @@ function getBaseURL() {
 }
 
 function httpGet(theUrl) {
-	var xmlHttp = new XMLHttpRequest();
-	xmlHttp.open("GET", theUrl, false); // false for synchronous request
-	xmlHttp.send(null);
-	return xmlHttp.responseText;
+	fetch(theUrl).then((response) => response.json().then((data) => processResponse(data)));
 }
 
 function getDefibrilatorAroundRequest(lat, lon, search_radius) {
