@@ -75,6 +75,20 @@
 				</tbody>
 			</table>
 		</div>
+		<div class="card">
+			<table>
+				<thead>
+					<td>Departments</td>
+				</thead>
+				<tbody>
+					{% for department in departments.findAll %}
+					<tr>
+						<td>{{ department.name }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 		{% for i in 1..100 %}
 			<div class="card">
 				Beaucoup de contenu.

@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Country;
+use App\Entity\Department;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
@@ -19,56 +20,53 @@ class DataGenerator
 
     public function importDataFromCSV(): void
     {
-        $countryFilePath = $this->rootPath . '/assets/dataFiles/country_stats.csv';
+        // Recherche de la France
+        $france = $this->entityManager->getRepository(Country::class)->findOneBy([
+            'name' => "France",
+        ]);
 
-        if (!file_exists($countryFilePath)) {
-            throw new \Exception("Le fichier n'existe pas : $countryFilePath");
+        if (!$france) {
+            throw new \Exception("Le pays 'France' n'existe pas dans la base de données.");
         }
 
-        $countrySpreadsheet = IOFactory::load($countryFilePath);
-        $countrySheet = $countrySpreadsheet->getActiveSheet();
-        $rows = $countrySheet->toArray();
+        // Chargement des départements
+        $departmentFilePath = $this->rootPath . '/assets/dataFiles/departments.csv';
+
+        if (!file_exists($departmentFilePath)) {
+            throw new \Exception("Le fichier n'existe pas : $departmentFilePath");
+        }
+
+        $departmentSpreadsheet = IOFactory::load($departmentFilePath);
+        $departmentSheet = $departmentSpreadsheet->getActiveSheet();
+        $rows = $departmentSheet->toArray();
 
         foreach ($rows as $index => $row) {
-            if ($index <= 4) {
+            if ($index === 0) {
                 continue; // Skip header row
             }
 
-            if ((float) $row[1] === 0.0) {
+            if ((int) $row[0] === 0) {
                 continue;
             }
 
-            // Recherche une entité existante avec le même nom
-            $existingCountry = $this->entityManager->getRepository(Country::class)->findOneBy([
-                'name' => $row[0],
+            $existingDepartment = $this->entityManager->getRepository(Department::class)->findOneBy([
+                'name' => $row[1],
             ]);
 
-            if ($existingCountry) {
-                // Vérifie si les autres attributs ont changé
-                if (
-                    $existingCountry->getManLifeExpectancy()   !== (float) $row[1] ||
-                    $existingCountry->getWomanLifeExpectancy() !== (float) $row[2] ||
-                    $existingCountry->getMortalityRate()       !== (float) $row[4]
-                ) {
-                    // Met à jour les attributs
-                    $existingCountry->setManLifeExpectancy((float) $row[1]);
-                    $existingCountry->setWomanLifeExpectancy((float) $row[2]);
-                    $existingCountry->setMortalityRate((float) $row[4]);
-
-                    $this->entityManager->persist($existingCountry); // Enregistre les modifications
-                }
-            } else {
-                // Crée une nouvelle entité si elle n'existe pas
-                $entity = new Country();
-                $entity->setName($row[0]);
-                $entity->setManLifeExpectancy((float) $row[1]);
-                $entity->setWomanLifeExpectancy((float) $row[2]);
-                $entity->setMortalityRate((float) $row[4]);
+            if (!$existingDepartment) {
+                $entity = new Department();
+                $entity->setName($row[1]);
+                $entity->setDepNumber((int) $row[0]);
+                $entity->setCountry($france);
 
                 $this->entityManager->persist($entity);
             }
         }
 
-        $this->entityManager->flush();
+        try {
+            $this->entityManager->flush();
+        } catch (\Exception $e) {
+            throw new \Exception("pb flush");
+        }
     }
 }
