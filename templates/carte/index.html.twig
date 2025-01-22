@@ -29,19 +29,35 @@
 
 {% block content %}
 <h2>Défibrillateurs, hôpitaux, cimetières</h2>
+<p id="locate_status">Chargement de la position ...</p>
 <article>
 	<div id="map" style="width: auto; height: 68vh; position:center"></div>
 
 	<script>
 		const defaultLocation = [37.764848, 125.625902];
 		
-		const mapObject = L.map('map');
-		const map = mapObject.setView(defaultLocation, 20);
-		map.locate({setView: true, maxZoom: 16});
-		let tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-				maxZoom: 19,
-				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-		}).addTo(map);
+		const map = L.map('map');
+
+		map.locate({setView: true, maxZoom: 20});
+
+		function setView(location, zoom) {
+			const mapView = map.setView(location, zoom);
+			let tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+					maxZoom: 20,
+					attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+			}).addTo(map);
+		}
+
+		map.addEventListener("locationerror", function (event) {
+			setView(defaultLocation, 19);
+			document.getElementById("locate_status").innerText = "La localisation a été refusée !";
+		});
+
+		map.addEventListener("locationfound", function (event) {
+			setView(event.latlng, 16);
+			document.getElementById("locate_status").innerText = "La localisation a été acceptée !";
+		});
+
 	</script>
 
 </article>
