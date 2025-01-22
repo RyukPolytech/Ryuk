@@ -27,11 +27,15 @@ class HomeController extends AbstractController
 
         $a = array(array("nom" => "rhone", "nombre" => 69), array("nom" => "loire", "nombre" => 42)); // pour l'exemple, il faudra interroger la base
         $b = array(array("prenom" => "julien", "nombre" => 120), array("prenom" => "lilas", "nombre" => 240), array("prenom" => "merlvyn", "nombre" => 60)); // pour l'exemple, il faudra interroger la base
+        $c = array(array("mort" => "ovni", "nombre" => 111), array("mort" => "dinosaure", "nombre" => 222), array("mort" => "merlvyn", "nombre" => 1)); // pour l'exemple, il faudra interroger la base
+        $d = array("electrocute", "ecrase", "foudroye", "tue", "par un alien", "par un dinosaure", "noye", "d'hesitation"); // pour l'exemple, il faudra interroger la base
         return $this->render('home/index.html.twig', [
             'countries' => $countryRepository,
             'controller_name' => 'HomeController',
             'topDepartements' => $a,
             'topPrenoms' => $b,
+            'topMorts' => $c,
+            'listeMorts' => $d,
         ]);
     }
 }
