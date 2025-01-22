@@ -53,13 +53,12 @@ article>.card {
     background-color: white;
     color: rgb(57, 57, 57);
     border-radius: 25px;
+    display: inline-flex;
 
     a {
         color: rgb(57, 57, 57);
     }
 }
-
-
 
 footer,
 header {

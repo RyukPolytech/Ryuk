@@ -7,48 +7,51 @@
 	<h2>Une mort est si vite arrivée...</h2>
 	<article>
 		<div class="card">
-			<h2>Nombre de morts par départements</h2>
-				<table class="table table-dark table-striped table-bordered table-hover rounded-3">
-					<thead>
-						<tr>
-							<th>Departement</th>
-							<th>Nombre</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for departement in topDepartements %}
-						<tr>
-							<td>{{ departement.nom }}</td>
-							<td>{{ departement.nombre }}</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
+		<h2>Nombre de morts par départements</h2>
+			<table class="table table-dark table-striped table-bordered table-hover rounded-3">
+				<thead>
+					<tr>
+						<th>Departement</th>
+						<th>Nombre</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for departement in topDepartements %}
+					<tr>
+						<td>{{ departement.nom }}</td>
+						<td>{{ departement.nombre }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
 		</div>
 		<div class="card">
 			<h2>Top des prénoms les plus morts</h2>
-				<table class="table table-dark table-striped table-bordered table-hover rounded-3">
-					<thead>
-						<tr>
-							<th>Prenom</th>
-							<th>Nombre</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for prenom in topPrenoms %}
-						<tr>
-							<td>{{ prenom.prenom }}</td>
-							<td>{{ prenom.nombre }}</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
+			<table class="table table-dark table-striped table-bordered table-hover rounded-3">
+				<thead>
+					<tr>
+						<th>Prenom</th>
+						<th>Nombre</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for prenom in topPrenoms %}
+					<tr>
+						<td>{{ prenom.prenom }}</td>
+						<td>{{ prenom.nombre }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
 		</div>
 		<div class="card">
-			<table>
+			<h2>Taux de mortalité par pays</h2>
+			<table class="table table-dark table-striped table-bordered table-hover rounded-3">
 				<thead>
-					<td>Pays</td>
-					<td>Taux de mortalité (%)</td>
+					<tr>
+						<th>Pays</th>
+						<th>Taux de mortalité (%)</th>
+					</tr>
 				</thead>
 				<tbody>
 					{% for country in countries.findAll %}
