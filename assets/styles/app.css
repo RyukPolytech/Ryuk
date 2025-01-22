@@ -108,6 +108,8 @@ form>input {
 
 .precautions {
     background-color: rgb(255, 194, 194);
+    margin: 10px;
+    padding: 5px;
     color: black;
     border-width: 5px;
 
