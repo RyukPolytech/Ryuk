@@ -19,7 +19,7 @@ class Department
     #[ORM\Column]
     private ?int $dep_number = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?float $avg_death_day = null;
 
     #[ORM\ManyToOne(inversedBy: 'departments')]

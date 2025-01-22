@@ -105,3 +105,26 @@ table {
 form>input {
     color: rgb(17, 17, 17);
 }
+
+.precautions {
+    background-color: rgb(255, 194, 194);
+    color: black;
+    border-width: 5px;
+
+    a {
+        color: rgb(57, 57, 57);
+    }
+}
+
+textarea {
+    width: 100%;
+}
+
+.hide {
+    display: none;
+  }
+  
+.not_technically_legally_binding:hover + .hide {
+    display: block;
+    color: red;
+}

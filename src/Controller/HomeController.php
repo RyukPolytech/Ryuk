@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\CountryRepository;
+use App\Repository\DepartmentRepository;
 use App\Service\DataGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +18,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/', name: 'app_home')]
-    public function index(CountryRepository $countryRepository): Response
+    public function index(CountryRepository $countryRepository, DepartmentRepository $departmentRepository): Response
     {
         try {
             $this->dataGenerator->importDataFromCSV();
@@ -31,6 +32,7 @@ class HomeController extends AbstractController
         $d = array("electrocute", "ecrase", "foudroye", "tue", "par un alien", "par un dinosaure", "noye", "d'hesitation"); // pour l'exemple, il faudra interroger la base
         return $this->render('home/index.html.twig', [
             'countries' => $countryRepository,
+            'departments' => $departmentRepository,
             'controller_name' => 'HomeController',
             'topDepartements' => $a,
             'topPrenoms' => $b,

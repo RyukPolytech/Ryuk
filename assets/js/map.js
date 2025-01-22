@@ -87,12 +87,14 @@ function updatePois() {
 map.addEventListener("locationerror", function (event) {
 	setView(defaultLocation, 19);
 	document.getElementById("locate_status").innerText = "La localisation a été refusée !";
+	document.getElementById("update-btn").disabled = false;
 });
 
 map.addEventListener("locationfound", function (event) {
 	setView(event.latlng, 16);
 	document.getElementById("locate_status").innerText = "La localisation a été acceptée !";
 	updatePois();
+	document.getElementById("update-btn").disabled = false;
 });
 
 function getBaseURL() {
