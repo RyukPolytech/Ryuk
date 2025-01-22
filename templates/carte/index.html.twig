@@ -34,31 +34,17 @@
 	<div id="map" style="width: auto; height: 68vh; position:center"></div>
 
 	<script>
-		const defaultLocation = [37.764848, 125.625902];
-		
-		const map = L.map('map');
+		const defIcon = L.icon({
+			iconUrl: "{{ asset('images/thunder.svg') }}",
 
-		map.locate({setView: true, maxZoom: 20});
-
-		function setView(location, zoom) {
-			const mapView = map.setView(location, zoom);
-			let tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-					maxZoom: 20,
-					attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-			}).addTo(map);
-		}
-
-		map.addEventListener("locationerror", function (event) {
-			setView(defaultLocation, 19);
-			document.getElementById("locate_status").innerText = "La localisation a été refusée !";
+			iconSize: [38, 95], // size of the icon
+			shadowSize: [50, 64], // size of the shadow
+			iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+			shadowAnchor: [4, 62],  // the same for the shadow
+			popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
 		});
-
-		map.addEventListener("locationfound", function (event) {
-			setView(event.latlng, 16);
-			document.getElementById("locate_status").innerText = "La localisation a été acceptée !";
-		});
-
 	</script>
+	<script src={{ asset('js/map.js') }}></script>
 
 </article>
 {% endblock %}
