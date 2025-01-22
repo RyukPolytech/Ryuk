@@ -7,6 +7,18 @@
 	<h2>Une mort est si vite arrivée...</h2>
 	<article>
 		<div class="card">
+			<h2>Nombre de morts depuis l'ouverture de la page</h2>
+			<table class="table table-bordered text-center">
+				<tbody>
+					<tr id="compteur">
+						{% for i in 11..0 %}
+							<td id="compteur-num{{ i }}">0</td>
+						{% endfor %}
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="card">
 		<h2>Nombre de morts par départements</h2>
 			<table class="table table-dark table-striped table-bordered table-hover rounded-3">
 				<thead>
@@ -68,5 +80,8 @@
 				Beaucoup de contenu.
 			</div>
 		{% endfor %}
+
+		</script>
+		<script src={{ asset('js/compteur.js') }}></script>
 	</article>
 {% endblock %}
