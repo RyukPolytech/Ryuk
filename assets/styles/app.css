@@ -53,7 +53,7 @@ article>.card {
     background-color: white;
     color: rgb(57, 57, 57);
     border-radius: 25px;
-    display: inline-flex;
+    display: inline-block;
 
     a {
         color: rgb(57, 57, 57);
@@ -76,10 +76,6 @@ footer {
     padding: 0.4em;
     margin-top: 2em;
     font-size: 12px;
-}
-
-footer>a {
-    color: white;
 }
 
 a {
@@ -120,4 +116,12 @@ form>input {
 
 textarea {
     width: 100%;
+}
+
+.submit {
+    background-color: rgb(217, 255, 0);
+    color: black;
+    border-radius: 25px;
+    padding: 5px;
+    margin: 5px;
 }

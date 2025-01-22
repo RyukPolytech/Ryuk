@@ -1,10 +1,133 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ryuk - Prédictions{% endblock %}
+{% block title %}Ryuk - Prédictions
+{% endblock %}
 
 {% block content %}
-<h2>Quelles sont vos chances de survie ?</h2>
-<article> 
-Contenu
-</article>
+	<h2>Quelles sont vos chances de survie ?</h2>
+	<article>
+		<p>
+			<b>
+				Renseignez vos informations :
+			</b>
+		</p>
+		<form>
+			<p>
+				<input type="text" id="prenom" name="prenom" placeholder="Prénom" size="30" required>
+				<input type="text" id="nom" name="nom" placeholder="Nom" size="30" required>
+			</p>
+			<p>
+				<select id="genre" name="genre" required>
+					<option value="" selected>Genre</option>
+					<option value="m">M</option>
+					<option value="f">F</option>
+					<option value="x">Autre</option>
+				</select>
+			</p>
+			<p>
+				Âge :
+				<input type="number" id="age" name="age" size="30" required>
+				<br>
+				Âge (en mois) :
+				<input type="number" id="age" name="age" size="30" required>
+				<br>
+				Âge (en jours) :
+				<input type="number" id="age" name="age" size="30" required>
+
+			</p>
+
+			<p>
+				Signe du zodiaque :<br>
+				<select id="signe_chinois" name="signe_chinois" required>
+					<option value="" selected>Signe du zodiaque chinois</option>
+					<option value="Rat">Rat</option>
+					<option value="Buffle">Buffle</option>
+					<option value="Tigre">Tigre</option>
+					<option value="Lapin">Lapin</option>
+					<option value="Dragon">Dragon</option>
+					<option value="Serpent">Serpent</option>
+					<option value="Cheval">Cheval</option>
+					<option value="Chèvre">Chèvre</option>
+					<option value="Singe">Singe</option>
+					<option value="Coq">Coq</option>
+					<option value="Chien">Chien</option>
+					<option value="Cochon">Cochon</option>
+				</select><br>
+				<select id="signe_astrologique" name="signe_astrologique" required>
+					<option value="" selected>Signe du zodiaque astrologique</option>
+					<option value="Bélier">Bélier</option>
+					<option value="Taureau">Taureau</option>
+					<option value="Gémeaux">Gémeaux</option>
+					<option value="Cancer">Cancer</option>
+					<option value="Lion">Lion</option>
+					<option value="Vierge">Vierge</option>
+					<option value="Balance">Balance</option>
+					<option value="Scorpion">Scorpion</option>
+					<option value="Sagittaire">Sagittaire</option>
+					<option value="Capricorne">Capricorne</option>
+					<option value="Verseau">Verseau</option>
+					<option value="Poissons">Poissons</option>
+				</select><br>
+				<select id="signe_emissaire" name="signe_emissaire" required>
+					<option value="" selected>Signe du zodiaque de l'émissaire</option>
+					<option value="Casserole">Casserole</option>
+					<option value="Poirier">Poirier</option>
+					<option value="Somnambule">Somnambule</option>
+					<option value="Ciseaux">Ciseaux</option>
+					<option value="Invitation">Invitation</option>
+					<option value="Rotule">Rotule</option>
+					<option value="Niveau">Niveau</option>
+					<option value="Boulangerie">Boulangerie</option>
+					<option value="Pinceau">Pinceau</option>
+					<option value="Collision">Collision</option>
+					<option value="Cascade">Cascade</option>
+					<option value="Cannibale">Cannibale</option>
+				</select>
+			</p>
+
+			<p>
+				Emplacement actuel :<br>
+				<input type="text" id="pays" name="pays" placeholder="pays" size="30" required><br>
+				<input type="text" id="ville" name="ville" placeholder="ville" size="30" required><br>
+				<input type="text" id="rue" name="rue" placeholder="rue" size="30" required><br>
+				<input type="number" id="etage" name="etage" placeholder="étage" size="30" required><br>
+				<select id="vert" name="vert" required><br>
+					<option value="" selected>Est-ce que vous avez du vert dans votre champ de vision ?</option>
+					<option value="o">oui</option>
+					<option value="n">non</option>
+					<option value="x">heu...</option>
+				</select>
+			</p>
+
+
+			<p>
+				<input type="text" id="repas" name="repas" placeholder="Dernier repas mangé" size="30" required><br>
+				<input type="text" id="boisson" name="boisson" placeholder="Dernière boisson bue" size="30" required><br>
+				<input type="text" id="plat_prefere" name="plat_prefere" placeholder="Plat préféré" size="30" required><br>
+				<input type="number" id="sang" name="sang" placeholder="Litre de sang en votre possession" size="30" required>
+			</p>
+
+			<p>
+				<select id="anxiete" name="anxiete" required><br>
+					<option value="" selected>Est-ce que le message d'alerte apparu sur votre écran a provoqué de l'anxiété chez vous ?</option>
+					<option value="n">non</option>
+					<option value="x">... quel message d'alerte ?</option>
+				</select><br>
+				<select id="anxiete2" name="anxiete2" required><br>
+					<option value="" selected>Est-ce que la question précédente a provoqué de l'anxiété chez vous ?</option>
+					<option value="n">évidemment que non</option>
+				</select><br>
+				<select id="anxiete3" name="anxiete3" required><br>
+					<option value="" selected>Comment voudriez-vous décéder ?</option>
+					<option value="now">Achevez-moi...</option>
+					<option value="no">La mort ne me concerne pas, en fait.</option>
+
+				</select>
+			</p>
+			<p>
+				<button class="submit" type="submit">Calculer vos chances de survie</button>
+			</p>
+
+		</form>
+	</article>
 {% endblock %}
