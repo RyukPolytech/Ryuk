@@ -12,7 +12,7 @@ setInterval(() => {
             incrementedCompteur.innerHTML = Number(incrementedCompteur.innerHTML) + 1;
             dontStop = false;
         }
-        if (i >=  10) {
+        if (i >=  11) {
             dontStop = false;
         }
     }
