@@ -119,12 +119,3 @@ form>input {
 textarea {
     width: 100%;
 }
-
-.hide {
-    display: none;
-  }
-  
-.not_technically_legally_binding:hover + .hide {
-    display: block;
-    color: red;
-}

@@ -6,123 +6,126 @@
 
 {% block content %}
 	<h2>Mieux vaut prévenir que mourir.</h2>
+	<p>Le modèle de testament suivant n'a aucune valeur légale, et est fourni uniquement à titre d'exemple.</p>
 	<article>
-
-		<div class="precautions">
-			<b>
-				On notera que la rédaction d'un testament doit être déléguée à un notaire, ou faite soi-même, à la main, avec des formules claires et sans ambiguïté.
-				<br>
-				Pensez à vérifier la législation concernant la part des biens que vous pouvez léguer à vos éventuels partenaire pacsé.e et enfants.
-			</b>Pour plus d'informations, consultez le site du
-			<a href="https://www.service-public.fr/particuliers/vosdroits/F770">Service Public</a>.
-		</div>
-		<br>
-		<div class="precautions">Le modèle de testament suivant n'a aucune valeur légale.</div>
-
-		<br>
-
 		<form>
-		<div id="preface">
-			Ceci est mon testament, <br>
-			je soussigné.e <br>
-			<select id="genre" name="genre" required> 
-				<option value="" selected>Genre</option>
-				<option value="m">M.</option>
-				<option value="f">Mme.</option>
-				<option value="x">Mx.</option>
-			</select>
-			<input type="text" id="nom" name="nom" placeholder="état-civil complet (noms, prénoms)" size="30" required>, né.e le
-			<input type="date" id="date_naissance" name="date_naissance" required> à
-			<input type="text" id="lieu_naissance" name="lieu_naissance" placeholder="lieu de naissance" size="30" required>, résidant au
-			<input type="text" id="numero" name="numero" size="8" placeholder="numéro" required>
-			<input type="text" id="rue" name="rue" size="30" placeholder="rue" required>,
-			<input type="text" id="code_postal" name="code_postal" size="8" placeholder="code postal" required>
-			<input type="text" id="ville" name="ville" size="10" placeholder="ville" required>
-			<input type="text" id="pays" name="pays" placeholder="pays" required>,
-		</div>
-
-		<br>
-		<br>
-
-
-		<div id="leg">
-			lègue à :
+			<div id="preface">
+				Ceci est mon testament,
+				<br>
+				je soussigné.e
+				<br>
+				<select id="genre" name="genre" required>
+					<option value="" selected>Genre</option>
+					<option value="m">M.</option>
+					<option value="f">Mme.</option>
+					<option value="x">Mx.</option>
+				</select>
+				<input type="text" id="nom" name="nom" placeholder="état-civil complet (noms, prénoms)" size="30" required>, né.e le
+				<input type="date" id="date_naissance" name="date_naissance" required>
+				à
+				<input type="text" id="lieu_naissance" name="lieu_naissance" placeholder="lieu de naissance" size="30" required>, résidant au
+				<input type="text" id="numero" name="numero" size="8" placeholder="numéro" required>
+				<input type="text" id="rue" name="rue" size="30" placeholder="rue" required>,
+				<input type="text" id="code_postal" name="code_postal" size="8" placeholder="code postal" required>
+				<input type="text" id="ville" name="ville" size="10" placeholder="ville" required>
+				<input type="text" id="pays" name="pays" placeholder="pays" required>,
+			</div>
 
 			<br>
-			<select id="genre_leg" name="genre_leg" required>
-				<option value="" selected>Genre</option>
-				<option value="m">M.</option>
-				<option value="f">Mme.</option>
-				<option value="x">Mx.</option>
-			</select>
-			<input type="text" id="nom_leg" name="nom_leg" size="30" placeholder="état-civil complet" required>, né.e
-			<input type="date" id="date_naissance_leg" name="date_naissance_leg" required>,
-			<input type="text" id="nom_leg" name="nom_leg" size="50" placeholder="lien : votre enfant, partenaire pacsé.e, ami.e..." required>
 			<br>
-			<textarea id="biens_leg" name="biens_leg" rows="4" placeholder="Liste des biens légués (en pleine propriété ou usufruit)" width="auto" required></textarea>
+
+
+			<div id="leg">
+				lègue à :
+
+				<br>
+				<select id="genre_leg" name="genre_leg" required>
+					<option value="" selected>Genre</option>
+					<option value="m">M.</option>
+					<option value="f">Mme.</option>
+					<option value="x">Mx.</option>
+				</select>
+				<input type="text" id="nom_leg" name="nom_leg" size="30" placeholder="état-civil complet" required>, né.e
+				<input type="date" id="date_naissance_leg" name="date_naissance_leg" required>,
+				<input type="text" id="nom_leg" name="nom_leg" size="50" placeholder="lien : votre enfant, partenaire pacsé.e, ami.e..." required>
+				<br>
+				<textarea id="biens_leg" name="biens_leg" rows="4" placeholder="Liste des biens légués (en pleine propriété ou usufruit)" width="auto" required></textarea>
+
+				<div class="precautions">
+					Paragraphe précédent à répéter pour chaque bénéficiaire. Si vous souhaitez qu'un héritier potentiel n'ait rien, pensez à le mentionner malgré tout, par exemple en lui léguant 1€ symbolique - dans la limité de la législation en vigueur.
+				</div>
+			</div>
+
+			<br><br>
+			<div id="tutelle">
+				<span class="fw-bold">
+					Tutelle testamentaire
+				</span>
+				<br>
+				En cas de décès simultanés et avant la majorité ou l’émancipation de mes enfants, je désigne pour exercer les fonctions de tuteur et de garde de mes enfants mineurs,
+				<select id="genre_tuteur" name="genre_tuteur" required>
+					<option value="" selected>Genre</option>
+					<option value="m">M.</option>
+					<option value="f">Mme.</option>
+					<option value="x">Mx.</option>
+				</select>
+				<input type="text" id="nom_tuteur" name="nom_tuteur" size="30" placeholder="état-civil du tuteur de premier rang" required>, ainsi que la faculté m’en est donnée par les dispositions du Code civil.
+				<br>
+				Pour le cas où ce dernier viendrait à décéder avant moi ou à ne pouvoir pourvoir aux fonctions de tuteur, je désigne comme tuteur de second rang
+				<select id="genre_tuteur2" name="genre_tuteur2" required>
+					<option value="" selected>Genre</option>
+					<option value="m">M.</option>
+					<option value="f">Mme.</option>
+					<option value="x">Mx.</option>
+				</select>
+				<input type="text" id="nom_tuteur2" size="30" name="nom_tuteur2" placeholder="état-civil du tuteur de second rang" required>
+			</div>
+
+			<br>
+			<br>
+			<div id="notaire">
+				Je souhaite que le présent testament soit mentionné au Fichier central des dispositions de dernières volontés par les soins de Maître
+				<input type="text" id="nom_notaire" size="30" name="nom_notaire" placeholder="état-civil de votre notaire" required>, notaire à
+				<input type="text" id="ville_notaire" size="10" name="ville_notaire" placeholder="ville" required>.
+				<div class="precautions">
+					Si vous n'appréciez pas particulièrement votre notaire, vous pouvez écrire votre testament sur n'importe quel support qui vous appartienne - par exemple un mur - et votre notaire sera forcé de le conserver.
+				</div>
+			</div>
+
+
+			<br>
+			<br>
+
+			<div id="outro">
+				Fait et écrit en entier de ma main, librement, avec la pleine jouissance de mes facultés intellectuelles.
+				<br>
+				Je déclare, en outre, révoquer toutes dispositions testamentaires antérieures.
+				<br>
+				Fait et passé à
+				<input type="text" id="ville_signature" size="10" name="ville_signature" placeholder="ville" required>
+				<br>
+				Le
+				<input type="date" id="date_signature" name="date_signature" required>
+				<br>
+			</div>
+
+			<br>
+			<br>
+			<button title="En appuyant sur ce bouton, vous acceptez de céder tous vos biens aux propriétaires du présent site.">Signature</button>
+
+			<br>
+			<br>
 
 			<div class="precautions">
-				Paragraphe précédent à répéter pour chaque bénéficiaire. Si vous souhaitez qu'un héritier potentiel n'ait rien, pensez à le mentionner malgré tout, par exemple en lui léguant 1€ symbolique - dans la limité de la législation en vigueur.
+				<b>
+					On notera que la rédaction d'un testament doit être déléguée à un notaire, ou faite soi-même, à la main, avec des formules claires et sans ambiguïté.
+					<br>
+					Pensez à vérifier la législation concernant la part des biens que vous pouvez léguer à vos éventuels partenaire pacsé.e et enfants.
+				</b>Pour plus d'informations, consultez le site du
+				<a href="https://www.service-public.fr/particuliers/vosdroits/F770">Service Public</a>.
 			</div>
-		</div>
-
-		<br><br>
-		<div id="tutelle">
-			<span class="fw-bold">
-				Tutelle testamentaire
-			</span>
-			<br>
-			En cas de décès simultanés et avant la majorité ou l’émancipation de mes enfants, je désigne pour exercer les fonctions de tuteur et de garde de mes enfants mineurs,
-			<select id="genre_tuteur" name="genre_tuteur" required>
-				<option value="" selected>Genre</option>
-				<option value="m">M.</option>
-				<option value="f">Mme.</option>
-				<option value="x">Mx.</option>
-			</select>
-			<input type="text" id="nom_tuteur" name="nom_tuteur" size="30" placeholder="état-civil du tuteur de premier rang" required>, ainsi que la faculté m’en est donnée par les dispositions du Code civil.
-			<br>
-			Pour le cas où ce dernier viendrait à décéder avant moi ou à ne pouvoir pourvoir aux fonctions de tuteur, je désigne comme tuteur de second rang
-			<select id="genre_tuteur2" name="genre_tuteur2" required>
-				<option value="" selected>Genre</option>
-				<option value="m">M.</option>
-				<option value="f">Mme.</option>
-				<option value="x">Mx.</option>
-			</select>
-			<input type="text" id="nom_tuteur2" size="30" name="nom_tuteur2" placeholder="état-civil du tuteur de second rang" required>
-		</div>
-
-		<br>
-		<br>
-		<div id="notaire">
-			Je souhaite que le présent testament soit mentionné au Fichier central des dispositions de dernières volontés par les soins de Maître
-			<input type="text" id="nom_notaire" size="30" name="nom_notaire" placeholder="état-civil de votre notaire" required>, notaire à
-			<input type="text" id="ville_notaire" size="10" name="ville_notaire" placeholder="ville" required>.
-			<div class="precautions">
-				Si vous n'appréciez pas particulièrement votre notaire, vous pouvez écrire votre testament sur n'importe quel support qui vous appartienne - par exemple un mur - et votre notaire sera forcé de le conserver.
-			</div>
-		</div>
 
 
-		<br>
-		<br>
-
-		<div id="outro">
-			Fait et écrit en entier de ma main, librement, avec la pleine jouissance de mes facultés intellectuelles.
-			<br>
-			Je déclare, en outre, révoquer toutes dispositions testamentaires antérieures.
-			<br>
-			Fait et passé à
-			<input type="text" id="ville_signature" size="10" name="ville_signature" placeholder="ville" required>
-			<br>
-			Le
-			<input type="date" id="date_signature" name="date_signature" required>
-			<br>
-		</div>
-
-		<br>
-		<br>
-		<div class="hide">En appuyant sur ce bouton, vous acceptez de céder tous vos biens aux propriétaires du présent site.</div>
-		<button class="not_technically_legally_binding">Signature</button>
-		
-	</form>
-</article>{% endblock %}
+		</form>
+	</article>
+{% endblock %}
