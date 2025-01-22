@@ -16,7 +16,7 @@ function setView(location, zoom) {
 
 function addPoint(node, icon) {
 	const { id, lat, lon } = node;
-	L.marker([lat, lon], { icon: defIcon }).addTo(map);
+	L.marker([lat, lon], { icon: icon }).addTo(map);
 }
 
 function getMiddlePoint(coordsList) {
