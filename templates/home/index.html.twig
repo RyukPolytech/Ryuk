@@ -25,6 +25,22 @@
 					</tbody>
 				</table>
 		</div>
+		<div class="card">
+			<table>
+				<thead>
+					<td>Pays</td>
+					<td>Taux de mortalité (%)</td>
+				</thead>
+				<tbody>
+					{% for country in countries.findAll %}
+					<tr>
+						<td>{{ country.name }}</td>
+						<td>{{ country.mortalityRate }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 		{% for i in 1..100 %}
 			<div class="card">
 				Beaucoup de contenu.
