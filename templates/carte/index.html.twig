@@ -39,21 +39,21 @@
 
 	<script>
 
-		function createIcon(path) {
+		function createIcon(path, iconAnchor, popupAnchor) {
 			return L.icon({
 				iconUrl: path,
 
 				iconSize: [38, 95], // size of the icon
 				shadowSize: [50, 64], // size of the shadow
-				iconAnchor: [10, 50], // point of the icon which will correspond to marker's location
+				iconAnchor: iconAnchor, // point of the icon which will correspond to marker's location
 				shadowAnchor: [4, 62],  // the same for the shadow
-				popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+				popupAnchor: popupAnchor // point from which the popup should open relative to the iconAnchor
 			});
 		}
 
-		const defIcon = createIcon("{{ asset('images/thunder.svg') }}");
-		const hosIcon = createIcon("{{ asset('images/hospital.svg') }}");
-		const cimIcon = createIcon("{{ asset('images/death.svg') }}");
+		const defIcon = createIcon("{{ asset('images/thunder.svg') }}", [20, 100], [-3, -76]);
+		const hosIcon = createIcon("{{ asset('images/hospital.svg') }}", [10, 50], [10, -20]);
+		const cimIcon = createIcon("{{ asset('images/death.svg') }}", [40, 50], [-20, -20]);
 
 	</script>
 	<script src={{ asset('js/map.js') }}></script>

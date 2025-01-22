@@ -14,16 +14,17 @@ function setView(location, zoom) {
 	}).addTo(map);
 }
 
-function addPoint(node, icon) {
+function addPoint(node, icon, title) {
 	const { id, lat, lon } = node;
-	L.marker([lat, lon], { icon: icon }).addTo(map);
+	const marker = L.marker([lat, lon], { icon: icon }).addTo(map);
+	if (title)
+		marker.bindPopup(title);
 }
 
 function getMiddlePoint(coordsList) {
 	let size = 0;
 	let final = [0, 0];
 	coordsList.forEach(coord => {
-		console.log(coord);
 		final[0] += coord[0];
 		final[1] += coord[1];
 		size ++;
@@ -33,16 +34,15 @@ function getMiddlePoint(coordsList) {
 	return final;
 }
 
-function addPolygon(node, polyIcon, color) {
+function addPolygon(node, polyIcon, color, title) {
 	let coordsList = [];
 	node.nodes.forEach(nodeID => {
 		const coords = poiNodes.get(nodeID);
-		console.log(nodeID);
 		coordsList.push(coords);
 	});
 	L.polygon(coordsList, {color: color}).addTo(map);
 	const middle = getMiddlePoint(coordsList);
-	L.marker(middle, { icon: polyIcon }).addTo(map);
+	L.marker(middle, { icon: polyIcon }).addTo(map).bindPopup(title);
 }
 
 function processPOI(poi) {
@@ -50,7 +50,7 @@ function processPOI(poi) {
 	if (poi.type == "node") {
 		poiNodes.set(poi.id, [poi.lat, poi.lon]);
 		if (tags && tags.emergency == "defibrillator") {
-			addPoint(poi, defIcon);
+			addPoint(poi, defIcon, tags["defibrillator:location"]);
 		}
 	}
 }
@@ -59,10 +59,11 @@ function processArea(poi) {
 	if (poi.type == "way") {
 		const tags = poi.tags;
 		if (tags.amenity == "hospital") {
-			addPolygon(poi, hosIcon, "red");
+			addPolygon(poi, hosIcon, "red", tags.name);
 		}
 		if (tags.landuse == "cemetery") {
-			addPolygon(poi, cimIcon, "black");
+			addPolygon(poi, cimIcon, "black", tags.name);
+			console.log(tags.name);
 		}
 	}
 }
