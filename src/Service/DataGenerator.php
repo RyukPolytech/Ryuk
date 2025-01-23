@@ -2,16 +2,21 @@
 
 namespace App\Service;
 
+use AllowDynamicProperties;
 use App\Entity\Country;
 use App\Entity\Death;
 use App\Entity\DeathCause;
 use App\Entity\Department;
+use App\Repository\CountryRepository;
+use App\Repository\DepartmentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-class DataGenerator
+#[AllowDynamicProperties] class DataGenerator
 {
     private EntityManagerInterface $entityManager;
+    private ?CountryRepository $countryRepo = null;
+    private ?DepartmentRepository $departmentRepo = null;
     private string $rootPath;
 
     public function __construct(string $rootPath, EntityManagerInterface $entityManager)
@@ -20,6 +25,9 @@ class DataGenerator
         $this->rootPath = $rootPath;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function importDataFromCSV(): void
     {
         //####################
@@ -187,28 +195,20 @@ class DataGenerator
         //#####################
         // Chargement des décès
         //#####################
-        $deathsFilePath1 = $this->rootPath . '/assets/dataFiles/deaths_list1.csv';
-        $this->generateDeathList($deathsFilePath1);
 
-        $deathsFilePath2 = $this->rootPath . '/assets/dataFiles/deaths_list2.csv';
-        $this->generateDeathList($deathsFilePath2);
+        $this->countryRepo    = $this->entityManager->getRepository(Country::class);
+        $this->departmentRepo = $this->entityManager->getRepository(Department::class);
 
-        $deathsFilePath3 = $this->rootPath . '/assets/dataFiles/deaths_list3.csv';
-        $this->generateDeathList($deathsFilePath3);
+        for ($i = 1; $i <= 29; $i++) {
+            $deathsFilePath = $this->rootPath . '/assets/dataFiles/deaths_list'. $i .'.csv';
+            $this->generateDeathList($deathsFilePath);
+        }
 
-        $deathsFilePath4 = $this->rootPath . '/assets/dataFiles/deaths_list4.csv';
-        $this->generateDeathList($deathsFilePath4);
-
-        $deathsFilePath5 = $this->rootPath . '/assets/dataFiles/deaths_list5.csv';
-        $this->generateDeathList($deathsFilePath5);
-
-        $deathsFilePath6 = $this->rootPath . '/assets/dataFiles/deaths_list6.csv';
-        $this->generateDeathList($deathsFilePath6);
     }
 
     private function generateDeathList(string $deathsFilePath): void
     {
-        if (!file_exists($deathsFilePath)) {
+        if ($this->countryRepo === null || $this->departmentRepo === null || !file_exists($deathsFilePath)) {
             echo "ff";
             throw new \Exception("Le fichier n'existe pas : $deathsFilePath");
         }
@@ -222,7 +222,7 @@ class DataGenerator
                 continue; // Skip header row
             }
 
-            if ((int) $row[1] === 0) {
+            if ((int) $row[23] === 0) {
                 continue;
             }
 
@@ -240,12 +240,12 @@ class DataGenerator
                 $entity->setBirthyear($birthYear);
                 $entity->setDeathYear($deathYear);
                 $entity->setAge($deathYear - $birthYear);
-                $countryRepo = $this->entityManager->getRepository(Country::class);
-                $france = $countryRepo->findOneBy(['name' => 'France']);
+
+                $france = $this->countryRepo->findOneBy(['name' => 'France']);
                 $entity->setBirthcountry($france);
                 $entity->setDeathcountry($france);
-                $departmentRepo = $this->entityManager->getRepository(Department::class);
-                $deathDepartment = $departmentRepo->findOneBy(['dep_number' => $row[17]]);
+
+                $deathDepartment = $this->departmentRepo->findOneBy(['dep_number' => $row[17]]);
                 $entity->setDeathDepartment($deathDepartment);
 
                 $this->entityManager->persist($entity);
