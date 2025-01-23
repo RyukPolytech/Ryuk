@@ -51,6 +51,7 @@ final class PredictionsController extends AbstractController
         $anxiete = $_POST['anxiete'];
         $anxiete2 = $_POST['anxiete2'];
         $anxiete3 = $_POST['anxiete3'];
+        $stats = '0.1%';
 
         return $this->render('predictions/resultat.html.twig', [
             'controller_name' => 'PredictionsController',
@@ -76,6 +77,7 @@ final class PredictionsController extends AbstractController
             'anxiete' => $anxiete,
             'anxiete2' => $anxiete2,
             'anxiete3' => $anxiete3,
+            'stats' => $stats
         ]);
     }
 
