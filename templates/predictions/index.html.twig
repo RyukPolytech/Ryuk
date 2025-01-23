@@ -11,7 +11,7 @@
 				Renseignez vos informations :
 			</b>
 		</p>
-		<form>
+		<form method="post" action="{{ path('predictions') }}">
 			<p>
 				<input type="text" id="prenom" name="prenom" placeholder="Prénom" size="30" required>
 				<input type="text" id="nom" name="nom" placeholder="Nom" size="30" required>
@@ -29,10 +29,10 @@
 				<input type="number" id="age" name="age" size="30" required>
 				<br>
 				Âge (en mois) :
-				<input type="number" id="age" name="age" size="30" required>
+				<input type="number" id="age_mois" name="age_mois" size="30" required>
 				<br>
 				Âge (en jours) :
-				<input type="number" id="age" name="age" size="30" required>
+				<input type="number" id="age_jours" name="age_jours" size="30" required>
 
 			</p>
 

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ryuk - Prédictions
+{% endblock %}
+
+{% block content %}
+	<h2>Quelles sont vos chances de survie ?</h2>
+	<article>
+		<p>
+			<b>
+				Selon nos calculs, vous avez <span style="color: red;">{{ prediction }}%</span> de chances de survie.
+			</b>
+		</p>
+	</article>
+{% endblock %}
