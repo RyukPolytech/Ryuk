@@ -11,7 +11,7 @@
 				Renseignez vos informations :
 			</b>
 		</p>
-		<form method="post" action="{{ path('predictions') }}">
+		<form method="post" action="{{ path('app_resultat') }}">
 			<p>
 				<input type="text" id="prenom" name="prenom" placeholder="Prénom" size="30" required>
 				<input type="text" id="nom" name="nom" placeholder="Nom" size="30" required>
@@ -88,6 +88,7 @@
 			<p>
 				Emplacement actuel :<br>
 				<input type="text" id="pays" name="pays" placeholder="pays" size="30" required><br>
+				<input type="text" id="departement" name="departement" placeholder="département" size="30" required><br>
 				<input type="text" id="ville" name="ville" placeholder="ville" size="30" required><br>
 				<input type="text" id="rue" name="rue" placeholder="rue" size="30" required><br>
 				<input type="number" id="etage" name="etage" placeholder="étage" size="30" required><br>

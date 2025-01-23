@@ -7,9 +7,41 @@
 	<h2>Quelles sont vos chances de survie ?</h2>
 	<article>
 		<p>
-			<b>
-				Selon nos calculs, vous avez <span style="color: red;">{{ prediction }}%</span> de chances de survie.
-			</b>
+			<b>Vos données :</b><br>
+			{{ prenom }} {{ nom }} ({{ genre }})
+			<br>
+			Âge : {{ age }} ans 
+			= {{ age_mois }} mois 
+			= {{ age_jours }} jours
+			<br>
+			Signes : {{ signe_chinois }} (chinois), 
+			{{ signe_astrologique }} (astrologique), 
+			{{ signe_emissaire }} (émissaire)
+			<br>
+			Emplacement : {{ etage }} étage,
+			rue {{ rue }},
+			{{ ville }}
+			{{ departement }}
+			{{ pays }} 
+			<br>
+			Votre réponse concernant la présence de la couleur verte dans voter champ de vision : {{ vert }}
+			<br>
+			Dernier repas : {{ repas }}
+			<br>
+			Dernière boisson : {{ boisson }}
+			<br>
+			Plat préféré : {{ plat_prefere }}
+			<br>
+			Vous avez {{ sang }} litres de sang en votre possession.
+			<br>
+			Message d'erreur : {{ anxiete }}
+			<br>
+			Stress : {{ anxiete2 }}
+			<br>
+			Volonté de mort : {{ anxiete3 }}
+		</p>
+		<p>
+			<b>Selon nos calculs, vous avez 0,1% de chances de survie.</b>
 		</p>
 	</article>
 {% endblock %}
