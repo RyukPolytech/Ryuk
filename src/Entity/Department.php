@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DepartmentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DepartmentRepository::class)]
@@ -25,6 +27,17 @@ class Department
     #[ORM\ManyToOne(inversedBy: 'departments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Country $country = null;
+
+    /**
+     * @var Collection<int, Death>
+     */
+    #[ORM\OneToMany(targetEntity: Death::class, mappedBy: 'death_department')]
+    private Collection $deaths;
+
+    public function __construct()
+    {
+        $this->deaths = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +88,36 @@ class Department
     public function setCountry(?Country $country): static
     {
         $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Death>
+     */
+    public function getDeaths(): Collection
+    {
+        return $this->deaths;
+    }
+
+    public function addDeath(Death $death): static
+    {
+        if (!$this->deaths->contains($death)) {
+            $this->deaths->add($death);
+            $death->setDeathDepartment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDeath(Death $death): static
+    {
+        if ($this->deaths->removeElement($death)) {
+            // set the owning side to null (unless already changed)
+            if ($death->getDeathDepartment() === $this) {
+                $death->setDeathDepartment(null);
+            }
+        }
 
         return $this;
     }

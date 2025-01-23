@@ -26,7 +26,7 @@ class HomeController extends AbstractController
                 $this->dataGenerator->importDataFromCSV();
             }
         } catch (\Exception $e) {
-            echo "data not found";
+            echo "data not found. Error : ".$e;
         }
 
         $a = array(array("nom" => "rhone", "nombre" => 69), array("nom" => "loire", "nombre" => 42)); // pour l'exemple, il faudra interroger la base

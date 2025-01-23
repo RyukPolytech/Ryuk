@@ -28,7 +28,7 @@ class Death
     private ?Country $deathcountry = null;
 
     #[ORM\ManyToOne(inversedBy: 'deaths')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?DeathCause $deathcause = null;
 
     #[ORM\Column(length: 255)]
@@ -37,14 +37,14 @@ class Death
     #[ORM\Column(length: 255)]
     private ?string $last_name = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $death_department = null;
-
     #[ORM\Column(length: 12, nullable: true)]
     private ?string $sex = null;
 
     #[ORM\Column]
     private ?int $death_year = null;
+
+    #[ORM\ManyToOne(inversedBy: 'deaths')]
+    private ?Department $death_department = null;
 
     public function getId(): ?int
     {
@@ -135,18 +135,6 @@ class Death
         return $this;
     }
 
-    public function getDeathDepartment(): ?int
-    {
-        return $this->death_department;
-    }
-
-    public function setDeathDepartment(?int $death_department): static
-    {
-        $this->death_department = $death_department;
-
-        return $this;
-    }
-
     public function getSex(): ?string
     {
         return $this->sex;
@@ -167,6 +155,18 @@ class Death
     public function setDeathYear(int $death_year): static
     {
         $this->death_year = $death_year;
+
+        return $this;
+    }
+
+    public function getDeathDepartment(): ?Department
+    {
+        return $this->death_department;
+    }
+
+    public function setDeathDepartment(?Department $death_department): static
+    {
+        $this->death_department = $death_department;
 
         return $this;
     }
