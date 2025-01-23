@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\CountryRepository;
+use App\Repository\DeathRepository;
 use App\Repository\DepartmentRepository;
 use App\Service\DataGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,12 +19,14 @@ class HomeController extends AbstractController
     }
 
     #[Route('/', name: 'app_home')]
-    public function index(CountryRepository $countryRepository, DepartmentRepository $departmentRepository): Response
+    public function index(CountryRepository $countryRepository, DepartmentRepository $departmentRepository, DeathRepository $deathRepository): Response
     {
         try {
-            $this->dataGenerator->importDataFromCSV();
+            if ($deathRepository->count() === 0) {
+                $this->dataGenerator->importDataFromCSV();
+            }
         } catch (\Exception $e) {
-            //Ayaya
+            echo "data not found";
         }
 
         $a = array(array("nom" => "rhone", "nombre" => 69), array("nom" => "loire", "nombre" => 42)); // pour l'exemple, il faudra interroger la base
@@ -31,8 +34,7 @@ class HomeController extends AbstractController
         $c = array(array("mort" => "ovni", "nombre" => 111), array("mort" => "dinosaure", "nombre" => 222), array("mort" => "merlvyn", "nombre" => 1)); // pour l'exemple, il faudra interroger la base
         $d = array("électrocution", "écrasement", "foudre", "mort", "par un alien", "par un dinosaure", "noyade", "d'hésitation"); // pour l'exemple, il faudra interroger la base
         return $this->render('home/index.html.twig', [
-            'countries' => $countryRepository,
-            'departments' => $departmentRepository,
+            'deathsStats' => $deathRepository,
             'controller_name' => 'HomeController',
             'topDepartements' => $a,
             'topPrenoms' => $b,

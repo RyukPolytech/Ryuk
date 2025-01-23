@@ -16,28 +16,33 @@ class DeathRepository extends ServiceEntityRepository
         parent::__construct($registry, Death::class);
     }
 
-//    /**
-//     * @return Death[] Returns an array of Death objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('d')
-//            ->andWhere('d.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('d.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+    * @return array Returns an array of the top 5 most common first names and their counts
+    */
+    public function findTop5FirstName(): array
+    {
+        return $this->createQueryBuilder('d')
+            ->select('d.firstName, COUNT(d.firstName) as deathCount')
+            ->groupBy('d.firstName')
+            ->orderBy('deathCount', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?Death
-//    {
-//        return $this->createQueryBuilder('d')
-//            ->andWhere('d.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+    * @return array Returns an array of the top 5 departments with the most deaths and their counts
+    */
+    public function findTop5Departments(): array
+    {
+        return $this->createQueryBuilder('d')
+            ->select('dept.name as departmentName, COUNT(d.id) as deathCount')
+            ->leftJoin('d.department', 'dept')
+            ->groupBy('dept.name')
+            ->orderBy('deathCount', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+    }
+
 }

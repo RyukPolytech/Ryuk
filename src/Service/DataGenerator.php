@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Country;
+use App\Entity\Death;
 use App\Entity\DeathCause;
 use App\Entity\Department;
 use Doctrine\ORM\EntityManagerInterface;
@@ -154,21 +155,27 @@ class DataGenerator
                 continue;
             }
 
-            $womanDeath = (int) $row[5];
-            $manDeath   = (int) $row[9];
-            $totalDeath = $womanDeath + $manDeath;
+            $existingDeathCause = $this->entityManager->getRepository(DeathCause::class)->findOneBy([
+                'title' => $row[0],
+            ]);
 
-            $entity = new DeathCause();
-            $entity->setTitle($row[0]);
-            $entity->setWomanDeath($womanDeath);
-            $entity->setManDeath($manDeath);
-            $entity->setSpan0To64($row[13]);
-            $entity->setSpan65To85((int) $row[16]);
-            $entity->setSpan85Plus((int) $row[19]);
-            $entity->setTotalDeath($totalDeath);
-            $entity->setYear(2022);
+            if (!$existingDeathCause) {
+                $womanDeath = (int) $row[5];
+                $manDeath   = (int) $row[9];
+                $totalDeath = $womanDeath + $manDeath;
 
-            $this->entityManager->persist($entity);
+                $entity = new DeathCause();
+                $entity->setTitle($row[0]);
+                $entity->setWomanDeath($womanDeath);
+                $entity->setManDeath($manDeath);
+                $entity->setSpan0To64($row[13]);
+                $entity->setSpan65To85((int) $row[16]);
+                $entity->setSpan85Plus((int) $row[19]);
+                $entity->setTotalDeath($totalDeath);
+                $entity->setYear(2022);
+
+                $this->entityManager->persist($entity);
+            }
         }
 
         try {
@@ -176,5 +183,80 @@ class DataGenerator
         } catch (\Exception $e) {
             throw new \Exception("flush issue for death causes");
         }
+
+        //#####################
+        // Chargement des décès
+        //#####################
+        $deathsFilePath1 = $this->rootPath . '/assets/dataFiles/deaths_list1.csv';
+        $this->generateDeathList($deathsFilePath1);
+
+        $deathsFilePath2 = $this->rootPath . '/assets/dataFiles/deaths_list2.csv';
+        $this->generateDeathList($deathsFilePath2);
+
+        $deathsFilePath3 = $this->rootPath . '/assets/dataFiles/deaths_list3.csv';
+        $this->generateDeathList($deathsFilePath3);
+
+        $deathsFilePath4 = $this->rootPath . '/assets/dataFiles/deaths_list4.csv';
+        $this->generateDeathList($deathsFilePath4);
+
+        $deathsFilePath5 = $this->rootPath . '/assets/dataFiles/deaths_list5.csv';
+        $this->generateDeathList($deathsFilePath5);
+
+        $deathsFilePath6 = $this->rootPath . '/assets/dataFiles/deaths_list6.csv';
+        $this->generateDeathList($deathsFilePath6);
+    }
+
+    private function generateDeathList(string $deathsFilePath): void
+    {
+        if (!file_exists($deathsFilePath)) {
+            echo "ff";
+            throw new \Exception("Le fichier n'existe pas : $deathsFilePath");
+        }
+
+        $deathsSpreadsheet = IOFactory::load($deathsFilePath);
+        $deathsSheet = $deathsSpreadsheet->getActiveSheet();
+        $rows = $deathsSheet->toArray();
+
+        foreach ($rows as $index => $row) {
+            if ($index <= 2) {
+                continue; // Skip header row
+            }
+
+            if ((int) $row[1] === 0) {
+                continue;
+            }
+
+            $existingDeath = $this->entityManager->getRepository(Death::class)->findOneBy([
+                'name' => $row[1],
+            ]);
+
+            if (!$existingDeath) {
+                $entity = new Death();
+                $entity->setLastName($row[0]);
+                $entity->setFirstName($row[1]);
+                $entity->setSex($row[2]);
+                $birthYear = (int) explode("-", $row[3])[0];
+                $deathYear = (int) explode("-", $row[4])[0];
+                $entity->setBirthyear($birthYear);
+                $entity->setDeathYear($deathYear);
+                $entity->setAge($deathYear - $birthYear);
+                $countryRepo = $this->entityManager->getRepository(Country::class);
+                $france = $countryRepo->findOneBy(['name' => 'France']);
+                $entity->setBirthcountry($france);
+                $entity->setDeathcountry($france);
+                $departmentRepo = $this->entityManager->getRepository(Department::class);
+                $deathDepartment = $departmentRepo->findOneBy(['dep_number' => $row[17]]);
+                $entity->setDeathDepartment($deathDepartment);
+
+                $this->entityManager->persist($entity);
+            }
+        }
+
+        try {
+            $this->entityManager->flush();
+        } catch (\Exception $e) {
+            throw new \Exception("flush issue for deaths");
+        }
+
     }
 }
