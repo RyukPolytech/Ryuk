@@ -12,6 +12,7 @@ use App\Repository\DepartmentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[AllowDynamicProperties] class DataGenerator
@@ -258,7 +259,9 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
             $this->entityManager->flush();
         } catch (\Exception $e) {
             throw new \Exception("Erreur : " . $e->getMessage());
+        } catch (TransportExceptionInterface $e) {
         }
+
 
     }
 }
