@@ -106,7 +106,11 @@ function processResponse(response) {
 function updatePois() {
 	const center = map.getCenter();
 	const search_radius = 6378137 / (2 ** (map.getZoom() - 5));
-	httpGet(getDefibrilatorAroundRequest(center.lat, center.lng, search_radius));
+	console.log(search_radius);
+	if (search_radius < 25000)
+		httpGet(getDefibrilatorAroundRequest(center.lat, center.lng, search_radius));
+	else
+		clearMakers();
 }
 
 map.addEventListener("locationerror", function (event) {
