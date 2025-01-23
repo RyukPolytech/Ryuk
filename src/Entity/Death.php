@@ -13,12 +13,6 @@ class Death
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $name = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?int $sex = null;
-
     #[ORM\Column]
     private ?int $birthyear = null;
 
@@ -37,33 +31,24 @@ class Death
     #[ORM\JoinColumn(nullable: false)]
     private ?DeathCause $deathcause = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $first_name = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $last_name = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $death_department = null;
+
+    #[ORM\Column(length: 12, nullable: true)]
+    private ?string $sex = null;
+
+    #[ORM\Column]
+    private ?int $death_year = null;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getSex(): ?int
-    {
-        return $this->sex;
-    }
-
-    public function setSex(?int $sex): static
-    {
-        $this->sex = $sex;
-
-        return $this;
     }
 
     public function getBirthyear(): ?int
@@ -122,6 +107,66 @@ class Death
     public function setDeathcause(?DeathCause $deathcause): static
     {
         $this->deathcause = $deathcause;
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->first_name;
+    }
+
+    public function setFirstName(string $first_name): static
+    {
+        $this->first_name = $first_name;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->last_name;
+    }
+
+    public function setLastName(string $last_name): static
+    {
+        $this->last_name = $last_name;
+
+        return $this;
+    }
+
+    public function getDeathDepartment(): ?int
+    {
+        return $this->death_department;
+    }
+
+    public function setDeathDepartment(?int $death_department): static
+    {
+        $this->death_department = $death_department;
+
+        return $this;
+    }
+
+    public function getSex(): ?string
+    {
+        return $this->sex;
+    }
+
+    public function setSex(?string $sex): static
+    {
+        $this->sex = $sex;
+
+        return $this;
+    }
+
+    public function getDeathYear(): ?int
+    {
+        return $this->death_year;
+    }
+
+    public function setDeathYear(int $death_year): static
+    {
+        $this->death_year = $death_year;
 
         return $this;
     }

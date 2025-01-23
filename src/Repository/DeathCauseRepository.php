@@ -16,20 +16,20 @@ class DeathCauseRepository extends ServiceEntityRepository
         parent::__construct($registry, DeathCause::class);
     }
 
-//    /**
-//     * @return DeathCause[] Returns an array of DeathCause objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('d')
-//            ->andWhere('d.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('d.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+    * @return array Returns an array of the top 5 most common death causes and their counts
+    */
+    public function findTop5DeathCause(): array
+    {
+        return $this->createQueryBuilder('d')
+            ->andWhere("d.title NOT LIKE 'Toutes Causes'")
+            ->select('d.title, d.totalDeath as deathCount')
+            ->groupBy('d.title')
+            ->orderBy('deathCount', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+    }
 
 //    public function findOneBySomeField($value): ?DeathCause
 //    {
