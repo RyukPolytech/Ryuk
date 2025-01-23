@@ -22,8 +22,8 @@ class DeathRepository extends ServiceEntityRepository
     public function findTop5FirstName(): array
     {
         return $this->createQueryBuilder('d')
-            ->select('d.firstName, COUNT(d.firstName) as deathCount')
-            ->groupBy('d.firstName')
+            ->select('d.first_name as firstName, COUNT(d.first_name) as deathCount')
+            ->groupBy('d.first_name')
             ->orderBy('deathCount', 'DESC')
             ->setMaxResults(5)
             ->getQuery()

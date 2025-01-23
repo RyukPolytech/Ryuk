@@ -11,18 +11,22 @@ use App\Repository\CountryRepository;
 use App\Repository\DepartmentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[AllowDynamicProperties] class DataGenerator
 {
     private EntityManagerInterface $entityManager;
     private ?CountryRepository $countryRepo = null;
     private ?DepartmentRepository $departmentRepo = null;
+    private HttpClientInterface $httpClient;
     private string $rootPath;
 
-    public function __construct(string $rootPath, EntityManagerInterface $entityManager)
+    public function __construct(string $rootPath, EntityManagerInterface $entityManager, HttpClientInterface $httpClient,)
     {
         $this->entityManager = $entityManager;
         $this->rootPath = $rootPath;
+        $this->httpClient = $httpClient;
     }
 
     /**
@@ -199,63 +203,61 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
         $this->countryRepo    = $this->entityManager->getRepository(Country::class);
         $this->departmentRepo = $this->entityManager->getRepository(Department::class);
 
-        for ($i = 1; $i <= 29; $i++) {
-            $deathsFilePath = $this->rootPath . '/assets/dataFiles/deaths_list'. $i .'.csv';
-            $this->generateDeathList($deathsFilePath);
-        }
-
-    }
-
-    private function generateDeathList(string $deathsFilePath): void
-    {
-        if ($this->countryRepo === null || $this->departmentRepo === null || !file_exists($deathsFilePath)) {
-            echo "ff";
-            throw new \Exception("Le fichier n'existe pas : $deathsFilePath");
-        }
-
-        $deathsSpreadsheet = IOFactory::load($deathsFilePath);
-        $deathsSheet = $deathsSpreadsheet->getActiveSheet();
-        $rows = $deathsSheet->toArray();
-
-        foreach ($rows as $index => $row) {
-            if ($index <= 2) {
-                continue; // Skip header row
-            }
-
-            if ((int) $row[23] === 0) {
-                continue;
-            }
-
-            $existingDeath = $this->entityManager->getRepository(Death::class)->findOneBy([
-                'name' => $row[1],
-            ]);
-
-            if (!$existingDeath) {
-                $entity = new Death();
-                $entity->setLastName($row[0]);
-                $entity->setFirstName($row[1]);
-                $entity->setSex($row[2]);
-                $birthYear = (int) explode("-", $row[3])[0];
-                $deathYear = (int) explode("-", $row[4])[0];
-                $entity->setBirthyear($birthYear);
-                $entity->setDeathYear($deathYear);
-                $entity->setAge($deathYear - $birthYear);
-
-                $france = $this->countryRepo->findOneBy(['name' => 'France']);
-                $entity->setBirthcountry($france);
-                $entity->setDeathcountry($france);
-
-                $deathDepartment = $this->departmentRepo->findOneBy(['dep_number' => $row[17]]);
-                $entity->setDeathDepartment($deathDepartment);
-
-                $this->entityManager->persist($entity);
-            }
-        }
+        $apiUrl = 'https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/liste-des-personnes-decedees-en-france/records?limit=100';
 
         try {
+            $response = $this->httpClient->request('GET', $apiUrl);
+            $data = json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
+
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new \Exception("Erreur de décodage JSON : " . json_last_error_msg());
+            }
+
+            if (empty($data['results'])) {
+                throw new \Exception("Aucune donnée disponible.");
+            }
+
+            foreach ($data['results'] as $result) {
+                $lastName = $result['lastname'] ?? null;
+                $firstName = explode(" ", $result['firstnames'] ?? null)[0];
+                $birthDate = $result['birth_date'] ?? null;
+                $deathDate = $result['death_date'] ?? null;
+
+                if (!$lastName || !$firstName || !$birthDate || !$deathDate) {
+                    continue;
+                }
+
+                $existingDeath = $this->entityManager->getRepository(Death::class)->findOneBy([
+                    'last_name' => $lastName,
+                    'first_name' => $firstName,
+                ]);
+
+                if (!$existingDeath) {
+                    $entity = new Death();
+                    $entity->setLastName($lastName);
+                    $entity->setFirstName($firstName);
+                    $entity->setSex($result['sex'] ?? null);
+
+                    $birthYear = (int) explode("-", $birthDate)[0];
+                    $deathYear = (int) explode("-", $deathDate)[0];
+                    $entity->setBirthYear($birthYear);
+                    $entity->setDeathYear($deathYear);
+                    $entity->setAge($result['age'] ?? ($deathYear - $birthYear));
+
+                    $france = $this->countryRepo->findOneBy(['name' => 'France']);
+                    $entity->setBirthCountry($france);
+                    $entity->setDeathCountry($france);
+
+                    $deathDepartment = $this->departmentRepo->findOneBy(['dep_number' => $result['current_death_dep_code'] ?? null]);
+                    $entity->setDeathDepartment($deathDepartment);
+
+                    $this->entityManager->persist($entity);
+                }
+            }
+
             $this->entityManager->flush();
         } catch (\Exception $e) {
-            throw new \Exception("flush issue for deaths");
+            throw new \Exception("Erreur : " . $e->getMessage());
         }
 
     }
