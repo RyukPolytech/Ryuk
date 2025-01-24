@@ -24,3 +24,5 @@ var/
 *.cache
 *.bash
 *.~lock.*
+
+assets/dataFiles/deathlist/*

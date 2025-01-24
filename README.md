@@ -61,6 +61,18 @@ Framework php : Symfony.
 symfony server:start
 ```
 
+# Télécharger les données
+
+Installer les dépendances
+```shell
+pip install -r requirements.txt
+```
+
+Lancer le script
+```shell
+python data_fetch
+```
+
 # Mettre à jour la base de données
 
 ```bash
