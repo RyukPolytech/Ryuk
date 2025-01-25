@@ -7,6 +7,9 @@ services:
       - "8000:8000"
     volumes:
       - ./:/app
+    depends_on:
+      local_db:
+        condition: service_healthy
   
   local_db:
     build:
@@ -16,6 +19,12 @@ services:
       - "3306:3306"
     volumes:
       - sqldata:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 2s
+      interval: 5s
+      timeout: 5s
+      retries: 3
 
 volumes:
   sqldata:

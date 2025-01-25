@@ -22,4 +22,4 @@ RUN apk add --no-cache bash && \
 
 WORKDIR /app
 
-ENTRYPOINT composer u && symfony server:start --allow-all-ip
+ENTRYPOINT composer u && bin/console doctrine:migrations:migrate && symfony server:start --allow-all-ip
