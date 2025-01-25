@@ -1,0 +1,21 @@
+services:
+  apache:
+    build:
+      context: images
+      dockerfile: Php_Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/app
+  
+  local_db:
+    build:
+      context: images
+      dockerfile: MySQL_Dockerfile
+    ports:
+      - "3306:3306"
+    volumes:
+      - sqldata:/var/lib/mysql
+
+volumes:
+  sqldata:

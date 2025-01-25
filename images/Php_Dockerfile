@@ -1,0 +1,25 @@
+FROM composer
+
+# Install dependencies for GD and install GD with support for jpeg, png webp and freetype
+# Info about installing GD in PHP https://www.php.net/manual/en/image.installation.php
+RUN apk add --no-cache \
+        libjpeg-turbo-dev \
+        libpng-dev \
+        libwebp-dev \
+        freetype-dev \
+        libpq-dev
+
+# As of PHP 7.4 we don't need to add --with-png
+RUN docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype
+RUN docker-php-ext-install gd pdo pdo_pgsql pdo_mysql
+
+# COPY setup-composer.sh setup-composer.sh
+# RUN chmod +x setup-composer.sh && ./setup-composer.sh
+
+RUN apk add --no-cache bash && \
+	curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.alpine.sh' | bash && \
+	apk add symfony-cli
+
+WORKDIR /app
+
+ENTRYPOINT composer u && symfony server:start --allow-all-ip
