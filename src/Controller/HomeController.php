@@ -14,7 +14,8 @@ class HomeController extends AbstractController
 {
     private DataGenerator $dataGenerator;
 
-    public function __construct(DataGenerator $dataGenerator) {
+    public function __construct(DataGenerator $dataGenerator)
+    {
         $this->dataGenerator = $dataGenerator;
     }
 
@@ -26,13 +27,25 @@ class HomeController extends AbstractController
                 $this->dataGenerator->importDataFromCSV();
             }
         } catch (\Exception $e) {
-            echo "data not found. Error : ".$e;
+            echo "data not found. Error : " . $e;
         }
 
-        $a = array(array("nom" => "rhone", "nombre" => 69), array("nom" => "loire", "nombre" => 42)); // pour l'exemple, il faudra interroger la base
-        $b = array(array("prenom" => "julien", "nombre" => 120), array("prenom" => "lilas", "nombre" => 240), array("prenom" => "merlvyn", "nombre" => 60)); // pour l'exemple, il faudra interroger la base
-        $c = array(array("mort" => "ovni", "nombre" => 111), array("mort" => "dinosaure", "nombre" => 222), array("mort" => "merlvyn", "nombre" => 1)); // pour l'exemple, il faudra interroger la base
+        $a = array(
+            array("nom" => "rhone", "nombre" => 69),
+            array("nom" => "loire", "nombre" => 42)
+        ); // pour l'exemple, il faudra interroger la base
+        $b = array(
+            array("prenom" => "julien", "nombre" => 120),
+            array("prenom" => "lilas", "nombre" => 240),
+            array("prenom" => "merlvyn", "nombre" => 60)
+        ); // pour l'exemple, il faudra interroger la base
+        $c = array(
+            array("mort" => "ovni", "nombre" => 111),
+            array("mort" => "dinosaure", "nombre" => 222),
+            array("mort" => "merlvyn", "nombre" => 1)
+        ); // pour l'exemple, il faudra interroger la base
         $d = array("électrocution", "écrasement", "foudre", "mort", "par un alien", "par un dinosaure", "noyade", "d'hésitation"); // pour l'exemple, il faudra interroger la base
+        
         return $this->render('home/index.html.twig', [
             'deathsStats' => $deathRepository,
             'controller_name' => 'HomeController',
