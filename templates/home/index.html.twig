@@ -6,8 +6,9 @@
 {% block content %}
 	<h2>Une mort est si vite arrivée...</h2>
 	<article>
+
 		<div class="card">
-			<h2>Aujourd'hui vous pourriez mourrir de...</h2>
+			<h2>Aujourd'hui vous pourriez mourir...</h2>
 			<table class="table table-bordered">
 				<tbody>
 					<tr>
@@ -16,6 +17,7 @@
 				</tbody>
 			</table>
 		</div>
+
 		<div class="card">
 			<h2>Nombre de morts depuis l'ouverture de la page</h2>
 			<table class="table table-bordered text-center">
@@ -23,17 +25,18 @@
 					<tr id="compteur">
 						{% for i in 11..0 %}
 							{% if (i%6 < 3) %}
-							<td class="table-dark table-active" id="compteur-num{{ i }}">0</td>
+								<td class="table-dark table-active" id="compteur-num{{ i }}">0</td>
 							{% else %}
-							<td class="table-dark" id="compteur-num{{ i }}">0</td>
+								<td class="table-dark" id="compteur-num{{ i }}">0</td>
 							{% endif %}
 						{% endfor %}
 					</tr>
 				</tbody>
 			</table>
 		</div>
+
 		<div class="card">
-		<h2>Nombre de morts par départements</h2>
+			<h2>Nombre de morts par départements</h2>
 			<table class="table table-dark table-striped table-bordered table-hover rounded-3">
 				<thead>
 					<tr>
@@ -43,14 +46,15 @@
 				</thead>
 				<tbody>
 					{% for departement in topDepartements %}
-					<tr>
-						<td>{{ departement.nom }}</td>
-						<td>{{ departement.nombre }}</td>
-					</tr>
+						<tr>
+							<td>{{ departement.nom }}</td>
+							<td>{{ departement.nombre }}</td>
+						</tr>
 					{% endfor %}
 				</tbody>
 			</table>
 		</div>
+
 		<div class="card">
 			<h2>Top des prénoms les plus morts</h2>
 			<table class="table table-dark table-striped table-bordered table-hover rounded-3">
@@ -62,16 +66,17 @@
 				</thead>
 				<tbody>
 					{% for prenom in topPrenoms %}
-					<tr>
-						<td>{{ prenom.prenom }}</td>
-						<td>{{ prenom.nombre }}</td>
-					</tr>
+						<tr>
+							<td>{{ prenom.prenom }}</td>
+							<td>{{ prenom.nombre }}</td>
+						</tr>
 					{% endfor %}
 				</tbody>
 			</table>
 		</div>
+
 		<div class="card">
-		<h2>Top des causes de décès</h2>
+			<h2>Top des causes de décès</h2>
 			<table class="table table-dark table-striped table-bordered table-hover rounded-3">
 				<thead>
 					<tr>
@@ -81,14 +86,15 @@
 				</thead>
 				<tbody>
 					{% for mort in topMorts %}
-					<tr>
-						<td>{{ mort.mort }}</td>
-						<td>{{ mort.nombre }}</td>
-					</tr>
+						<tr>
+							<td>{{ mort.mort }}</td>
+							<td>{{ mort.nombre }}</td>
+						</tr>
 					{% endfor %}
 				</tbody>
 			</table>
 		</div>
+
 		<div class="card">
 			<table>
 				<thead>
@@ -99,10 +105,10 @@
 				</thead>
 				<tbody>
 					{% for death in deathsStats.findTop5FirstName %}
-					<tr>
-						<td>{{ death.firstName }}</td>
-						<td>{{ death.deathCount }}</td>
-					</tr>
+						<tr>
+							<td>{{ death.firstName }}</td>
+							<td>{{ death.deathCount }}</td>
+						</tr>
 					{% endfor %}
 				</tbody>
 			</table>
