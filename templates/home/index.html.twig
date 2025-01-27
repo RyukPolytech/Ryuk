@@ -5,58 +5,34 @@
 
 {% block content %}
 	<h2>Une mort est si vite arrivée...</h2>
-	<article>
 
-		<div class="card">
-			<h2>Aujourd'hui vous pourriez mourir...</h2>
-			<table class="table table-bordered">
-				<tbody>
-					<tr>
-						<td>{{ random(listeMorts) }}</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-
-		<div class="card">
-			<h2>Nombre de morts depuis l'ouverture de la page</h2>
-			<table class="table table-bordered text-center">
-				<tbody>
-					<tr id="compteur">
-						{% for i in 11..0 %}
-							{% if (i%6 < 3) %}
-								<td class="table-dark table-active" id="compteur-num{{ i }}">0</td>
-							{% else %}
-								<td class="table-dark" id="compteur-num{{ i }}">0</td>
-							{% endif %}
-						{% endfor %}
-					</tr>
-				</tbody>
-			</table>
-		</div>
-
-		<div class="card">
-			<h2>Nombre de morts par départements</h2>
-			<table class="table table-dark table-striped table-bordered table-hover rounded-3">
-				<thead>
-					<tr>
-						<th>Departement</th>
-						<th>Nombre</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for departement in topDepartements %}
-						<tr>
-							<td>{{ departement.nom }}</td>
-							<td>{{ departement.nombre }}</td>
-						</tr>
+	<div>
+		Aujourd'hui, vous pourriez mourir
+		<span class="fw-bold">{{ random(listeMorts) }}</span>.
+	</div>
+	<div>
+		Nombre de morts dans le monde depuis le chargement de cette page :
+		<table class="table table-bordered text-center top-0 start-50" style="width: 6rem;">
+			<tbody>
+				<tr id="compteur">
+					{% for i in 11..0 %}
+						{% if (i%6 < 3) %}
+							<td class="table-dark table-active" id="compteur-num{{ i }}">0</td>
+						{% else %}
+							<td class="table-dark" id="compteur-num{{ i }}">0</td>
+						{% endif %}
 					{% endfor %}
-				</tbody>
-			</table>
-		</div>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 
+	<article>
 		<div class="card">
-			<table>
+			<h2>
+				Top 5 des causes de décès
+			</h2>
+			<table class="table table-dark table-striped table-bordered table-hover rounded-3">
 				<thead>
 					<tr>
 						<th>Maladie</th>
@@ -75,7 +51,10 @@
 		</div>
 
 		<div class="card">
-			<table>
+			<h2>
+				Top 5 des prénoms les plus mortels
+			</h2>
+			<table class="table table-dark table-striped table-bordered table-hover rounded-3">
 				<thead>
 					<tr>
 						<th>Prénoms</th>
@@ -94,7 +73,10 @@
 		</div>
 
 		<div class="card">
-			<table>
+			<h2>
+				Top 5 des départements les plus mortels
+			</h2>
+			<table class="table table-dark table-striped table-bordered table-hover rounded-3">
 				<thead>
 					<tr>
 						<th>Département</th>
