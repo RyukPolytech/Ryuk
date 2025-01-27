@@ -44,7 +44,7 @@ class HomeController extends AbstractController
             array("mort" => "dinosaure", "nombre" => 222),
             array("mort" => "merlvyn", "nombre" => 1)
         ); // pour l'exemple, il faudra interroger la base
-        $d = array("électrocuté", "écrasé", "d'un coup de foudre", "de mort :(", "d'une attaque d'extraterrestre", "d'une attaque de dinosaured", "noyé", "d'hésitation"); // pour l'exemple, il faudra interroger la base
+        $d = array("électrocuté", "écrasé", "d'un coup de foudre", "de mort :(", "d'une attaque d'extraterrestre", "d'une attaque de dinosaures", "noyé", "d'hésitation"); // pour l'exemple, il faudra interroger la base
         
         return $this->render('home/index.html.twig', [
             'deathsStats' => $deathRepository,
