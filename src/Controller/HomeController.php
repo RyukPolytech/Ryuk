@@ -2,9 +2,8 @@
 
 namespace App\Controller;
 
-use App\Repository\CountryRepository;
+use App\Repository\DeathCauseRepository;
 use App\Repository\DeathRepository;
-use App\Repository\DepartmentRepository;
 use App\Service\DataGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +19,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/', name: 'app_home')]
-    public function index(CountryRepository $countryRepository, DepartmentRepository $departmentRepository, DeathRepository $deathRepository): Response
+    public function index(DeathRepository $deathRepository, DeathCauseRepository $deathCauseRepository): Response
     {
         try {
             if ($deathRepository->count() === 0) {
@@ -48,6 +47,7 @@ class HomeController extends AbstractController
         
         return $this->render('home/index.html.twig', [
             'deathsStats' => $deathRepository,
+            'deathsCauses' => $deathCauseRepository,
             'controller_name' => 'HomeController',
             'topDepartements' => $a,
             'topPrenoms' => $b,

@@ -23,8 +23,7 @@ class DeathCauseRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('d')
             ->andWhere("d.title NOT LIKE 'Toutes Causes'")
-            ->select('d.title, d.totalDeath as deathCount')
-            ->groupBy('d.title')
+            ->select('d.title as title, d.totalDeath as deathCount')
             ->orderBy('deathCount', 'DESC')
             ->setMaxResults(5)
             ->getQuery()

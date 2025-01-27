@@ -37,7 +37,7 @@ class DeathRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('d')
             ->select('dept.name as departmentName, COUNT(d.id) as deathCount')
-            ->leftJoin('d.department', 'dept')
+            ->leftJoin('d.death_department', 'dept')
             ->groupBy('dept.name')
             ->orderBy('deathCount', 'DESC')
             ->setMaxResults(5)
