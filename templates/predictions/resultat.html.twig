@@ -8,40 +8,59 @@
 	<article>
 		<p>
 			<b>Vos données :</b><br>
-			{{ prenom }} {{ nom }} ({{ genre }})
+			{{ prenom }}
+			{{ nom }}
+			({{ genre }})
 			<br>
-			Âge : {{ age }} ans 
-			= {{ age_mois }} mois 
-			= {{ age_jours }} jours
+			Date de naissance :
+			{{ date_naissance }}
 			<br>
-			Signes : {{ signe_chinois }} (chinois), 
-			{{ signe_astrologique }} (astrologique), 
-			{{ signe_emissaire }} (émissaire)
+			Signes :
+			{{ signe_chinois }}
+			(chinois),
+			{{ signe_astrologique }}
+			(astrologique),
+			{{ signe_emissaire }}
+			(émissaire)
 			<br>
-			Emplacement : {{ etage }} étage,
-			rue {{ rue }},
+			Emplacement :
+			{{ etage }}
+			étage,
+						rue
+			{{ rue }},
 			{{ ville }}
 			{{ departement }}
-			{{ pays }} 
+			{{ pays }}
 			<br>
-			Votre réponse concernant la présence de la couleur verte dans voter champ de vision : {{ vert }}
+			Votre réponse concernant la présence de la couleur verte dans voter champ de vision :
+			{{ vert }}
 			<br>
-			Dernier repas : {{ repas }}
+			Dernier repas :
+			{{ repas }}
 			<br>
-			Dernière boisson : {{ boisson }}
+			Dernière boisson :
+			{{ boisson }}
 			<br>
-			Plat préféré : {{ plat_prefere }}
+			Plat préféré :
+			{{ plat_prefere }}
 			<br>
-			Vous avez {{ sang }} litres de sang en votre possession.
+			Vous avez
+			{{ sang }}
+			litres de sang en votre possession.
 			<br>
-			Message d'erreur : {{ anxiete }}
+			Message d'erreur :
+			{{ anxiete }}
 			<br>
-			Stress : {{ anxiete2 }}
+			Stress :
+			{{ anxiete2 }}
 			<br>
-			Volonté de mort : {{ anxiete3 }}
+			Volonté de mort :
+			{{ anxiete3 }}
 		</p>
 		<p>
-			<b>Selon nos calculs, vous avez {{ stats }} de chances de survie.</b>
+			<b>Selon nos calculs, vous avez
+				{{ stats }}
+				de chances de survie.</b>
 		</p>
 	</article>
 {% endblock %}

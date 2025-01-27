@@ -32,9 +32,7 @@ final class PredictionsController extends AbstractController
         $prenom = $_POST['prenom'];
         $nom = $_POST['nom'];
         $genre = $_POST['genre'];
-        $age = $_POST['age'];
-        $age_mois = $_POST['age_mois'];
-        $age_jours = $_POST['age_jours'];
+        $date_naissance = $_POST['date_naissance'];
         $signe_chinois = $_POST['signe_chinois'];
         $signe_astrologique = $_POST['signe_astrologique'];
         $signe_emissaire = $_POST['signe_emissaire'];
@@ -58,9 +56,7 @@ final class PredictionsController extends AbstractController
             'prenom' => $prenom,
             'nom' => $nom,
             'genre' => $genre,
-            'age' => $age,
-            'age_mois' => $age_mois,
-            'age_jours' => $age_jours,
+            'date_naissance' => $date_naissance,
             'signe_chinois' => $signe_chinois,
             'signe_astrologique' => $signe_astrologique,
             'signe_emissaire' => $signe_emissaire,
