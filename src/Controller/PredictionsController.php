@@ -49,7 +49,16 @@ final class PredictionsController extends AbstractController
         $anxiete = $_POST['anxiete'];
         $anxiete2 = $_POST['anxiete2'];
         $anxiete3 = $_POST['anxiete3'];
-        $stats = '0.1%';
+        $birthYear = (int)explode("-", $date_naissance)[0];
+        $currentYear = date('Y');
+        $year = $currentYear - $birthYear;
+        $avgDeathAge = $deathRepository->findAvgDeathAge($genre)[0]["avgAge"];
+        if ($year <= 0 || ($avgDeathAge - $year) < 0) {
+            $stats = 100;
+        } else {
+            $stats = round((1 / ($avgDeathAge - $year)) * 200, 2);
+        }
+
 
         return $this->render('predictions/resultat.html.twig', [
             'controller_name' => 'PredictionsController',

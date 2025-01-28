@@ -35,6 +35,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
      */
     public function importDataFromCSV(): void
     {
+        ini_set('memory_limit', '999M');
         //####################
         // Chargement des pays
         //####################
@@ -205,56 +206,68 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
         $this->departmentRepo = $this->entityManager->getRepository(Department::class);
         $france = $this->countryRepo->findOneBy(['name' => 'France']);
 
-        for ($i = 0; $i < $this->nbDeathFile; $i++) {
-
-            $deathsFilePath = $this->rootPath . '/assets/dataFiles/deathlist_part_' . $i . '.csv';
+        for ($i = 1; $i <= $this->nbDeathFile; $i++) {
+            $deathsFilePath = $this->rootPath . '/assets/dataFiles/deathlist/deathlist_part_' . $i . '.csv';
 
             if (!file_exists($deathsFilePath)) {
                 throw new \Exception("Le fichier n'existe pas : $deathsFilePath");
             }
 
-            $deathsSpreadsheet = IOFactory::load($deathsFilePath);
-            $deathsSheet = $deathsSpreadsheet->getActiveSheet();
-            $rows = $deathsSheet->toArray();
+            // Open the file for reading
+            if (($file = fopen($deathsFilePath, 'rb')) !== false) {
+                $rowIndex = 0;
 
-            foreach ($rows as $index => $row) {
-                if ($index <= 1) {
-                    continue; // Skip header row
+                while (($row = fgetcsv($file, 1000, ";")) !== false) {
+                    $rowIndex++;
+
+                    // Skip header rows or invalid rows
+                    if ($rowIndex <= 1 || count($row) < 5 || strlen($row[2]) > 2) {
+                        continue;
+                    }
+
+                    $lastName = $row[0];
+                    $firstName = explode(" ", $row[1])[0];
+                    $birthDate = $row[3];
+                    $deathDate = $row[4];
+
+                    $existingDeath = $this->entityManager->getRepository(Death::class)->findOneBy([
+                        'last_name' => $lastName,
+                        'first_name' => $firstName,
+                    ]);
+
+                    if (!$existingDeath) {
+                        $entity = new Death();
+                        $entity->setLastName($lastName);
+                        $entity->setFirstName($firstName);
+                        $entity->setSex($row[2]);
+
+                        $birthYear = (int)explode("-", $birthDate)[0];
+                        $deathYear = (int)explode("-", $deathDate)[0];
+                        $entity->setBirthYear($birthYear);
+                        $entity->setDeathYear($deathYear);
+                        $entity->setAge($deathYear - $birthYear);
+
+                        if ($entity->getAge() > 1 && $entity->getAge() < 200) {
+
+                            $entity->setBirthCountry($france);
+                            $entity->setDeathCountry($france);
+
+                            if (count($row) > 17 && $row[17] !== null && (int)$row[17] !== 0) {
+                                $deathDepartment = $this->departmentRepo->findOneBy(['dep_number' => (int) $row[17]]);
+                                $entity->setDeathDepartment($deathDepartment);
+                            }
+
+                            $this->entityManager->persist($entity);
+                            $this->entityManager->flush();
+                        }
+                    }
                 }
 
-                $lastName = $row[0];
-                $firstName = explode(" ", $row[1])[0];
-                $birthDate = $row[3];
-                $deathDate = $row[4];
-
-                $existingDeath = $this->entityManager->getRepository(Death::class)->findOneBy([
-                    'last_name' => $lastName,
-                    'first_name' => $firstName,
-                ]);
-
-                if (!$existingDeath) {
-                    $entity = new Death();
-                    $entity->setLastName($lastName);
-                    $entity->setFirstName($firstName);
-                    $entity->setSex($row[2]);
-
-                    $birthYear = (int)explode("-", $birthDate)[0];
-                    $deathYear = (int)explode("-", $deathDate)[0];
-                    $entity->setBirthYear($birthYear);
-                    $entity->setDeathYear($deathYear);
-                    $entity->setAge($deathYear - $birthYear);
-
-
-                    $entity->setBirthCountry($france);
-                    $entity->setDeathCountry($france);
-
-                    $deathDepartment = $this->departmentRepo->findOneBy(['dep_number' => $row[16]]);
-                    $entity->setDeathDepartment($deathDepartment);
-
-                    $this->entityManager->persist($entity);
-                }
+                fclose($file); // Close the file after processing
+            } else {
+                echo "Error : ". $row;
+                throw new \Exception("Impossible d'ouvrir le fichier : $deathsFilePath");
             }
-            $this->entityManager->flush();
         }
     }
 }

@@ -36,6 +36,7 @@ class DeathRepository extends ServiceEntityRepository
     public function findTop5Departments(): array
     {
         return $this->createQueryBuilder('d')
+            ->andWhere("dept.name NOT LIKE ''")
             ->select('dept.name as departmentName, COUNT(d.id) as deathCount')
             ->leftJoin('d.death_department', 'dept')
             ->groupBy('dept.name')
@@ -43,6 +44,18 @@ class DeathRepository extends ServiceEntityRepository
             ->setMaxResults(5)
             ->getQuery()
             ->getResult();
+    }
+
+    public function findAvgDeathAge($genre)
+    {
+        return $this->createQueryBuilder('d')
+            ->andWhere("d.sex LIKE :genre")
+            ->setParameter('genre', $genre)
+            ->select('AVG(d.age) as avgAge')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+
     }
 
 }

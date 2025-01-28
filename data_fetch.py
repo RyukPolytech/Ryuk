@@ -18,8 +18,8 @@ total_size = 5 * 1024 * 1024 * 1024
 block_size = 1024
 tqdm_bar = tqdm(total=total_size, unit="iB", unit_scale=True)
 
-chunk_size = 2000000
-env_file_path = ".env"
+chunk_size = 200000
+env_file_path = ".env.dev"
 header = None
 chunk = []
 file_index = 1
