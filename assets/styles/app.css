@@ -7,6 +7,7 @@ body {
     display: flex;
     flex-direction: column;
     font-family: 'OctoSquares', Arial, Helvetica, sans-serif;
+    padding-bottom: 50px;
 }
 
 h1 {
@@ -23,15 +24,16 @@ h2 {
     width: 100%;
 }
 
-.nav>a {
+.nav>div {
     width: 15%;
     display: table-cell;
     text-align: center;
     color: white;
     border-radius: 25px;
+    vertical-align: middle;
 }
 
-.nav>a:hover {
+.nav>div:hover.clickable {
     background-color: rgb(57, 57, 57);
 }
 
