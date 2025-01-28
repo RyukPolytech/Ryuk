@@ -25,3 +25,4 @@ services:
     App\Service\DataGenerator:
         arguments:
             - "%kernel.project_dir%"
+            - "%env(COUNT_DEATH_LIST_FILE)%"

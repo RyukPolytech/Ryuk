@@ -11,8 +11,6 @@ use App\Repository\CountryRepository;
 use App\Repository\DepartmentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[AllowDynamicProperties] class DataGenerator
@@ -21,13 +19,15 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
     private ?CountryRepository $countryRepo = null;
     private ?DepartmentRepository $departmentRepo = null;
     private HttpClientInterface $httpClient;
+    private $nbDeathFile;
     private string $rootPath;
 
-    public function __construct(string $rootPath, EntityManagerInterface $entityManager, HttpClientInterface $httpClient,)
+    public function __construct(string $rootPath, string $nbDeathFile, EntityManagerInterface $entityManager, HttpClientInterface $httpClient)
     {
         $this->entityManager = $entityManager;
         $this->rootPath = $rootPath;
         $this->httpClient = $httpClient;
+        $this->nbDeathFile = (int) $nbDeathFile;
     }
 
     /**
@@ -203,30 +203,29 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
         $this->countryRepo    = $this->entityManager->getRepository(Country::class);
         $this->departmentRepo = $this->entityManager->getRepository(Department::class);
+        $france = $this->countryRepo->findOneBy(['name' => 'France']);
 
-        $apiUrl = 'https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/liste-des-personnes-decedees-en-france/records?limit=100';
+        for ($i = 0; $i < $this->nbDeathFile; $i++) {
 
-        try {
-            $response = $this->httpClient->request('GET', $apiUrl);
-            $data = json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
+            $deathsFilePath = $this->rootPath . '/assets/dataFiles/deathlist_part_' . $i . '.csv';
 
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                throw new \Exception("Erreur de décodage JSON : " . json_last_error_msg());
+            if (!file_exists($deathsFilePath)) {
+                throw new \Exception("Le fichier n'existe pas : $deathsFilePath");
             }
 
-            if (empty($data['results'])) {
-                throw new \Exception("Aucune donnée disponible.");
-            }
+            $deathsSpreadsheet = IOFactory::load($deathsFilePath);
+            $deathsSheet = $deathsSpreadsheet->getActiveSheet();
+            $rows = $deathsSheet->toArray();
 
-            foreach ($data['results'] as $result) {
-                $lastName = $result['lastname'] ?? null;
-                $firstName = explode(" ", $result['firstnames'] ?? null)[0];
-                $birthDate = $result['birth_date'] ?? null;
-                $deathDate = $result['death_date'] ?? null;
-
-                if (!$lastName || !$firstName || !$birthDate || !$deathDate) {
-                    continue;
+            foreach ($rows as $index => $row) {
+                if ($index <= 1) {
+                    continue; // Skip header row
                 }
+
+                $lastName = $row[0];
+                $firstName = explode(" ", $row[1])[0];
+                $birthDate = $row[3];
+                $deathDate = $row[4];
 
                 $existingDeath = $this->entityManager->getRepository(Death::class)->findOneBy([
                     'last_name' => $lastName,
@@ -237,31 +236,25 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
                     $entity = new Death();
                     $entity->setLastName($lastName);
                     $entity->setFirstName($firstName);
-                    $entity->setSex($result['sex'] ?? null);
+                    $entity->setSex($row[2]);
 
-                    $birthYear = (int) explode("-", $birthDate)[0];
-                    $deathYear = (int) explode("-", $deathDate)[0];
+                    $birthYear = (int)explode("-", $birthDate)[0];
+                    $deathYear = (int)explode("-", $deathDate)[0];
                     $entity->setBirthYear($birthYear);
                     $entity->setDeathYear($deathYear);
-                    $entity->setAge($result['age'] ?? ($deathYear - $birthYear));
+                    $entity->setAge($deathYear - $birthYear);
 
-                    $france = $this->countryRepo->findOneBy(['name' => 'France']);
+
                     $entity->setBirthCountry($france);
                     $entity->setDeathCountry($france);
 
-                    $deathDepartment = $this->departmentRepo->findOneBy(['dep_number' => $result['current_death_dep_code'] ?? null]);
+                    $deathDepartment = $this->departmentRepo->findOneBy(['dep_number' => $row[16]]);
                     $entity->setDeathDepartment($deathDepartment);
 
                     $this->entityManager->persist($entity);
                 }
             }
-
             $this->entityManager->flush();
-        } catch (\Exception $e) {
-            throw new \Exception("Erreur : " . $e->getMessage());
-        } catch (TransportExceptionInterface $e) {
         }
-
-
     }
 }
