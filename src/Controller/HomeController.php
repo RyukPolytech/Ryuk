@@ -29,30 +29,31 @@ class HomeController extends AbstractController
             echo "data not found. Error : " . $e;
         }
 
-        $a = array(
-            array("nom" => "rhone", "nombre" => 69),
-            array("nom" => "loire", "nombre" => 42)
-        ); // pour l'exemple, il faudra interroger la base
-        $b = array(
-            array("prenom" => "julien", "nombre" => 120),
-            array("prenom" => "lilas", "nombre" => 240),
-            array("prenom" => "merlvyn", "nombre" => 60)
-        ); // pour l'exemple, il faudra interroger la base
-        $c = array(
-            array("mort" => "ovni", "nombre" => 111),
-            array("mort" => "dinosaure", "nombre" => 222),
-            array("mort" => "merlvyn", "nombre" => 1)
-        ); // pour l'exemple, il faudra interroger la base
-        $d = array("électrocuté", "écrasé", "d'un coup de foudre", "de mort :(", "d'une attaque d'extraterrestre", "d'une attaque de dinosaures", "noyé", "d'hésitation"); // pour l'exemple, il faudra interroger la base
-        
+        $d = array(
+            "électrocuté.e",
+            "écrasé.e",
+            "d'un coup de foudre",
+            "d'une attaque d'extraterrestre",
+            "d'une attaque de dinosaures",
+            "noyé.e",
+            "d'hésitation",
+            "parce qu'un météore vous est tombé dessus",
+            "de rire",
+            "d'une coupure de papier, ouch",
+            "juste après avoir trouvé un ticket de loto gagnant, mince",
+            "assomé.e par une enclume",
+            "d'une overdose de café",
+            "empoisonné.e par votre animal de compagnie",
+            "d'embarras",
+            "parce que l'Apocalpse vient d'arriver"
+        );
+
         return $this->render('home/index.html.twig', [
+            'controller_name' => 'HomeController',
             'deathsStats' => $deathRepository,
             'deathsCauses' => $deathCauseRepository,
-            'controller_name' => 'HomeController',
-            'topDepartements' => $a,
-            'topPrenoms' => $b,
-            'topMorts' => $c,
             'listeMorts' => $d,
+
         ]);
     }
 }
