@@ -7,14 +7,28 @@
 	<h2>Quelles sont vos chances de survie ?</h2>
 	<article>
 		<p>
-			<b>Vos données :</b><br>
+			<b>
+				Vos données :
+			</b>
+
+			<br>
+
 			{{ prenom }}
 			{{ nom }}
 			({{ genre }})
+
 			<br>
+
 			Date de naissance :
 			{{ date_naissance }}
+			{% if genre != '' %}
+				- la moyenne d'âge de mort est de
+				{{ avg_age }}
+				pour une personne de votre genre !
+			{% endif %}
+
 			<br>
+
 			Signes :
 			{{ signe_chinois }}
 			(chinois),
@@ -22,45 +36,89 @@
 			(astrologique),
 			{{ signe_emissaire }}
 			(émissaire)
+
 			<br>
+
 			Emplacement :
 			{{ etage }}
-			étage,
-						rue
+			étage, rue
 			{{ rue }},
 			{{ ville }}
 			{{ departement }}
 			{{ pays }}
+			- Êtes-vous sûr de vouloir rester ici ? Il y a sûrement de meilleurs endroits à hanter.
+			{% if vert == 'o' %}
+				Au moins, il y a du vert dans votre champ de vision...
+			{% elseif vert == 'n' %}
+				Il n'y a même pas de vert dans votre champ de vision !
+			{% else %}
+				Vous n'avez même pas su répondre sur le fait qu'il y ait ou non du vert dans votre champ de vision !
+			{% endif %}
+
 			<br>
-			Votre réponse concernant la présence de la couleur verte dans votre champ de vision :
-			{{ vert }}
-			<br>
+
 			Dernier repas :
 			{{ repas }}
 			<br>
 			Dernière boisson :
 			{{ boisson }}
 			<br>
-			Plat préféré :
-			{{ plat_prefere }}
+			{% if repas == plat_prefere %}
+				Au moins vous avez mangé votre plat favori. C'est déjà ça.
+			{% else %}
+				J'espère que ce ne sera pas votre dernier repas...
+			{% endif %}
+
 			<br>
+
 			Vous avez
 			{{ sang }}
 			litres de sang en votre possession.
+
+			{% if sang <= 2 %}
+				Vous semblez en manquer un peu...
+			{% elseif sang > 6 %}
+				Vous semblez en avoir en quantité amplement suffisante ! C'est à se demander si c'est bien tout le vôtre !
+			{% else %}
+				Ne vous inquiétez pas, vous avez encore de quoi tenir un peu.
+			{% endif %}
+
 			<br>
-			Message d'erreur :
-			{{ anxiete }}
+
+			{% if anxiete =='n' %}
+				Le message d'alerte apparu sur votre écran n'a pas provoqué d'anxiété chez vous.
+			{% else %}
+				Il semblerait que le vous n'ayez pas remarqué le message d'alerte apparu sur voter écran.
+			{% endif %}
+
 			<br>
-			Stress :
-			{{ anxiete2 }}
-			<br>
-			Volonté de mort :
-			{{ anxiete3 }}
+
+			{% if anxiete2 != 'n' %}
+				Vous n'êtes pas censé voir ça.
+			{% else %}
+				Vous n'avez pas été affecté par la question précédente. Félicitations.
+			{% endif %}<br>
 		</p>
 		<p>
-			<b>Selon nos calculs, vous avez
-				{{ stats }}
-				% de chances de mourir cette année.</b>
+			<b>
+
+				{% if anxiete3 == 'now' %}
+					Le questionnaire est désormais fini. Vous pouvez vous reposer.
+					<br>
+					Selon nos calculs, vous avez d'ailleurs
+					{{ stats }}
+					% de chances de pouvoir le faire éternellement au cours de cette année !
+
+				{% else %}
+					Malgré votre optimisme louable, la mort est (encore) inévitable :
+					<br>
+					Selon nos calculs, vous avez
+					{{ stats }}
+					% de chances de décédé au cours de cette année.
+
+				{% endif %}
+			</b>
 		</p>
-	</article>
-{% endblock %}
+
+	</p>
+</article>{% endblock %}

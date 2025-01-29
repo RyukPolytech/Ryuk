@@ -52,11 +52,11 @@ final class PredictionsController extends AbstractController
         $birthYear = (int)explode("-", $date_naissance)[0];
         $currentYear = date('Y');
         $year = $currentYear - $birthYear;
-        $avgDeathAge = $deathRepository->findAvgDeathAge($genre)[0]["avgAge"];
-        if ($year <= 0 || ($avgDeathAge - $year) < 0) {
+        $avgDeathAgeGender = $deathRepository->findAvgDeathAgeByGender($genre)[0]["avgAge"];
+        if ($year <= 0 || ($avgDeathAgeGender - $year) < 0) {
             $stats = 100;
         } else {
-            $stats = round((1 / ($avgDeathAge - $year)) * 200, 2);
+            $stats = round((1 / ($avgDeathAgeGender - $year)) * 100, 2);
         }
 
 
@@ -82,7 +82,8 @@ final class PredictionsController extends AbstractController
             'anxiete' => $anxiete,
             'anxiete2' => $anxiete2,
             'anxiete3' => $anxiete3,
-            'stats' => $stats
+            'stats' => $stats,
+            'avg_age' => $avgDeathAgeGender
         ]);
     }
 

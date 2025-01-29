@@ -46,7 +46,11 @@ class DeathRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findAvgDeathAge($genre)
+    /**
+     * @param mixed $genre, String
+     * @return array Returns an array of the average death age of people of the given gender
+     */
+    public function findAvgDeathAgeByGender($genre)
     {
         return $this->createQueryBuilder('d')
             ->andWhere("d.sex LIKE :genre")
