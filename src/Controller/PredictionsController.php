@@ -41,7 +41,7 @@ final class PredictionsController extends AbstractController
         $ville = $_POST['ville'];
         $rue = $_POST['rue'];
         $etage = $_POST['etage'];
-        $vert = $_POST['vert'];
+        $joli = $_POST['joli'];
         $repas = $_POST['repas'];
         $boisson = $_POST['boisson'];
         $plat_prefere = $_POST['plat_prefere'];
@@ -74,7 +74,7 @@ final class PredictionsController extends AbstractController
             'ville' => $ville,
             'rue' => $rue,
             'etage' => $etage,
-            'vert' => $vert,
+            'joli' => $joli,
             'repas' => $repas,
             'boisson' => $boisson,
             'plat_prefere' => $plat_prefere,

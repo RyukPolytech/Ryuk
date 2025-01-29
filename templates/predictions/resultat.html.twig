@@ -21,7 +21,7 @@
 
 			Date de naissance :
 			{{ date_naissance }}
-			{% if genre != '' %}
+			{% if genre != 'X' %}
 				- la moyenne d'âge de mort est de
 				{{ avg_age }}
 				pour une personne de votre genre !
@@ -47,12 +47,12 @@
 			{{ departement }}
 			{{ pays }}
 			- Êtes-vous sûr de vouloir rester ici ? Il y a sûrement de meilleurs endroits à hanter.
-			{% if vert == 'o' %}
-				Au moins, il y a du vert dans votre champ de vision...
-			{% elseif vert == 'n' %}
-				Il n'y a même pas de vert dans votre champ de vision !
+			{% if joli == 'o' %}
+				Au moins, vous le trouvez joli...
+			{% elseif joli == 'n' %}
+				Vous ne le trouvez même pas joli !
 			{% else %}
-				Vous n'avez même pas su répondre sur le fait qu'il y ait ou non du vert dans votre champ de vision !
+				Vous n'avez même pas su répondre sur le fait qu'il soit joli ou non !
 			{% endif %}
 
 			<br>
@@ -66,7 +66,7 @@
 			{% if repas == plat_prefere %}
 				Au moins vous avez mangé votre plat favori. C'est déjà ça.
 			{% else %}
-				J'espère que ce ne sera pas votre dernier repas...
+				J'espère que ce ne sera pas votre dernier repas, vous n'avez même pas mangé votre plat favori.
 			{% endif %}
 
 			<br>
@@ -80,7 +80,7 @@
 			{% elseif sang > 6 %}
 				Vous semblez en avoir en quantité amplement suffisante ! C'est à se demander si c'est bien tout le vôtre !
 			{% else %}
-				Ne vous inquiétez pas, vous avez encore de quoi tenir un peu.
+				Ne vous inquiétez pas, vous avez encore de quoi tenir un peu avec ça.
 			{% endif %}
 
 			<br>
@@ -88,7 +88,7 @@
 			{% if anxiete =='n' %}
 				Le message d'alerte apparu sur votre écran n'a pas provoqué d'anxiété chez vous.
 			{% else %}
-				Il semblerait que le vous n'ayez pas remarqué le message d'alerte apparu sur voter écran.
+				Il semblerait que vous n'ayez pas remarqué le message d'alerte apparu sur votre écran.
 			{% endif %}
 
 			<br>
@@ -96,8 +96,10 @@
 			{% if anxiete2 != 'n' %}
 				Vous n'êtes pas censé voir ça.
 			{% else %}
-				Vous n'avez pas été affecté par la question précédente. Félicitations.
-			{% endif %}<br>
+				Vous n'avez pas non plus été affecté.e par la question précédente. Félicitations.
+			{% endif %}
+
+			<br>
 		</p>
 		<p>
 			<b>
@@ -114,7 +116,7 @@
 					<br>
 					Selon nos calculs, vous avez
 					{{ stats }}
-					% de chances de décédé au cours de cette année.
+					% de chances de décéder au cours de cette année.
 
 				{% endif %}
 			</b>
